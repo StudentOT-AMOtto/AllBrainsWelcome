@@ -1,16 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
-    // --- DATA (Initial Test Idea) ---
-    const database = [
-        { id: 1, title: 'E-commerce Platform', description: 'A full-featured e-commerce platform with a custom CMS, product management, and a secure checkout process. Built for scalability and high traffic.', category: 'Web Development', status: 'Completed', tech: ['React', 'Node.js', 'PostgreSQL'] },
-        { id: 2, title: 'Mobile Banking App', description: 'A native mobile application for iOS and Android that allows users to manage their bank accounts, transfer funds, and pay bills securely.', category: 'Mobile App', status: 'In Progress', tech: ['Swift', 'Kotlin', 'Firebase'] },
-        { id: 3, title: 'Data Analytics Dashboard', description: 'An interactive dashboard for visualizing complex sales and marketing data, with real-time updates and customizable reports.', category: 'Data Science', status: 'Completed', tech: ['Python', 'D3.js', 'React'] },
-        { id: 4, title: 'Company Website Redesign', description: 'A complete overhaul of the corporate website to improve user experience, accessibility, and search engine optimization.', category: 'Web Development', status: 'Planning', tech: ['HTML', 'CSS', 'JavaScript'] },
-        { id: 5, title: 'Inventory Management System', description: 'A web-based system for tracking inventory across multiple warehouses, with barcode scanning and automated reordering features.', category: 'Web Development', status: 'In Progress', tech: ['React', 'Firebase'] },
-        { id: 6, title: 'Fitness Tracker App', description: 'A cross-platform mobile app that tracks user workouts, sets goals, and provides social sharing features.', category: 'Mobile App', status: 'Completed', tech: ['React Native', 'GraphQL'] },
-        { id: 7, title: 'AI Chatbot Integration', description: 'An AI-powered chatbot integrated into the customer support portal to answer common questions and escalate complex issues to human agents.', category: 'AI/ML', status: 'In Progress', tech: ['Python', 'TensorFlow', 'Dialogflow'] },
-        { id: 8, title: 'Marketing Campaign Analytics', description: 'A data pipeline and visualization tool to track the performance of marketing campaigns across various channels.', category: 'Data Science', status: 'Planning', tech: ['Python', 'Tableau', 'SQL'] }
-    ];
+
+    let database = []; // This will hold the fetched JSON data
 
     // --- ELEMENTS ---
     const resultsGrid = document.getElementById('results-grid');
@@ -23,8 +13,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalContent = document.getElementById('modal-content');
     const modalCloseButton = document.getElementById('modal-close-button');
     const modalOverlay = document.getElementById('modal-overlay');
+    const loadingIndicator = document.getElementById('loading-indicator');
 
     // --- FUNCTIONS ---
+
+    /**
+     * Fetches the data from Database.json.
+     */
+    async function fetchDatabase() {
+        try {
+            loadingIndicator.classList.remove('hidden'); // Show loading indicator
+            resultsCount.textContent = 'Loading data...'; // Update results count message
+            const response = await fetch('Database.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            database = await response.json();
+            console.log('Database loaded:', database); // For debugging
+            populateFilters();
+            populateResults(database);
+        } catch (error) {
+            console.error('Error fetching database:', error);
+            resultsCount.textContent = 'Failed to load data.';
+            noResultsMessage.classList.remove('hidden'); // Show no results message on error
+            noResultsMessage.querySelector('h3').textContent = 'Error loading data';
+            noResultsMessage.querySelector('p').textContent = 'Please try again later.';
+        } finally {
+            loadingIndicator.classList.add('hidden'); // Hide loading indicator
+        }
+    }
 
     /**
      * Renders a single project card.
@@ -32,19 +49,20 @@ document.addEventListener('DOMContentLoaded', function () {
      * @returns {string} - The HTML string for the card.
      */
     function renderCard(item) {
-        const techBadges = item.tech.map(t => 
-            `<span class="inline-block bg-gray-200 text-gray-800 text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${t}</span>`
-        ).join('');
+        // Use 'Format' from the JSON as 'techBadges' for display on the card
+        const formatBadges = item.Format ? item.Format.map(f =>
+            `<span class="inline-block bg-gray-200 text-gray-800 text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${f}</span>`
+        ).join('') : '';
 
         return `
-            <div data-id="${item.id}" class="resource-card bg-white rounded-lg shadow-sm flex flex-col cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+            <div data-id="${item.Index}" class="resource-card bg-white rounded-lg shadow-sm flex flex-col cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                 <div class="p-6 flex-grow">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">${item.title}</h3>
-                    <p class="text-gray-600 text-base mb-4 line-clamp-2">${item.description}</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">${item.Name}</h3>
+                    <p class="text-gray-600 text-base mb-4 line-clamp-2">${item.Summary}</p>
                 </div>
                 <div class="p-6 pt-2 border-t border-gray-100 mt-auto">
                     <div class="flex flex-wrap">
-                        ${techBadges}
+                        ${formatBadges}
                     </div>
                 </div>
             </div>
@@ -74,17 +92,24 @@ document.addEventListener('DOMContentLoaded', function () {
      * Creates and populates the filter checkboxes based on the data.
      */
     function populateFilters() {
-        const categories = [...new Set(database.map(item => item.category))];
-        const statuses = [...new Set(database.map(item => item.status))];
-        const allTech = [...new Set(database.flatMap(item => item.tech))];
+        // Collect unique values for each filter category from the database
+        const areasOfSupport = [...new Set(database.flatMap(item => item['Areas of support'] || []))];
+        const formats = [...new Set(database.flatMap(item => item.Format || []))];
+        const prices = [...new Set(database.flatMap(item => item.Price || []))];
 
-        const categoryContainer = document.getElementById('category-filters');
-        const statusContainer = document.getElementById('status-filters');
-        const techContainer = document.getElementById('tech-filters');
+        const areasOfSupportContainer = document.getElementById('areas-of-support-filters');
+        const formatContainer = document.getElementById('format-filters');
+        const priceContainer = document.getElementById('price-filters');
 
-        categories.sort().forEach(val => categoryContainer.innerHTML += createCheckbox('category', val));
-        statuses.sort().forEach(val => statusContainer.innerHTML += createCheckbox('status', val));
-        allTech.sort().forEach(val => techContainer.innerHTML += createCheckbox('tech', val));
+        // Clear existing filters before populating
+        areasOfSupportContainer.innerHTML = '';
+        formatContainer.innerHTML = '';
+        priceContainer.innerHTML = '';
+
+        // Sort and create checkboxes
+        areasOfSupport.sort().forEach(val => areasOfSupportContainer.innerHTML += createCheckbox('areas-of-support', val));
+        formats.sort().forEach(val => formatContainer.innerHTML += createCheckbox('format', val));
+        prices.sort().forEach(val => priceContainer.innerHTML += createCheckbox('price', val));
     }
     
     /**
@@ -94,9 +119,11 @@ document.addEventListener('DOMContentLoaded', function () {
      * @returns {string} - The HTML string for the checkbox label.
      */
     function createCheckbox(name, value) {
+        // Sanitize value for HTML id attribute if necessary (e.g., replace spaces)
+        const id = `${name}-${value.replace(/\s+/g, '-').toLowerCase()}`;
         return `
-            <label class="flex items-center space-x-3 cursor-pointer">
-                <input type="checkbox" name="${name}" value="${value}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+            <label for="${id}" class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" id="${id}" name="${name}" value="${value}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
                 <span class="text-gray-700">${value}</span>
             </label>
         `;
@@ -107,15 +134,24 @@ document.addEventListener('DOMContentLoaded', function () {
      */
     function filterData() {
         const formData = new FormData(filterForm);
-        const selectedCategories = formData.getAll('category');
-        const selectedStatuses = formData.getAll('status');
-        const selectedTech = formData.getAll('tech');
+        const selectedAreasOfSupport = formData.getAll('areas-of-support');
+        const selectedFormats = formData.getAll('format');
+        const selectedPrices = formData.getAll('price');
 
         const filteredItems = database.filter(item => {
-            const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(item.category);
-            const statusMatch = selectedStatuses.length === 0 || selectedStatuses.includes(item.status);
-            const techMatch = selectedTech.length === 0 || selectedTech.every(tech => item.tech.includes(tech));
-            return categoryMatch && statusMatch && techMatch;
+            // Check if item's 'Areas of support' array contains ALL selected areas
+            const areasOfSupportMatch = selectedAreasOfSupport.length === 0 ||
+                                        selectedAreasOfSupport.every(area => (item['Areas of support'] || []).includes(area));
+
+            // Check if item's 'Format' array contains ALL selected formats
+            const formatMatch = selectedFormats.length === 0 ||
+                                selectedFormats.every(format => (item.Format || []).includes(format));
+
+            // Check if item's 'Price' array contains ALL selected prices
+            const priceMatch = selectedPrices.length === 0 ||
+                               selectedPrices.every(price => (item.Price || []).includes(price));
+
+            return areasOfSupportMatch && formatMatch && priceMatch;
         });
 
         populateResults(filteredItems);
@@ -123,31 +159,79 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /**
      * Opens the modal with details for a specific project.
-     * @param {string|number} itemId - The ID of the item to display.
+     * @param {string|number} itemId - The ID (Index) of the item to display.
      */
     function openModal(itemId) {
-        const item = database.find(i => i.id == itemId);
+        const item = database.find(i => i.Index == itemId);
         if (!item) return;
 
-        modalTitle.textContent = item.title;
+        modalTitle.textContent = item.Name;
         
-        const techBadges = item.tech.map(t => 
-            `<span class="inline-block bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${t}</span>`
-        ).join('');
+        let contentHTML = `<p class="text-gray-700 text-base">${item.Summary}</p>`;
+        
+        // Areas of Support
+        if (item['Areas of support'] && item['Areas of support'].length > 0) {
+            const areasBadges = item['Areas of support'].map(a => 
+                `<span class="inline-block bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${a}</span>`
+            ).join('');
+            contentHTML += `
+                <div class="mt-4">
+                    <h4 class="font-semibold text-gray-800">Areas of Support</h4>
+                    <div class="flex flex-wrap mt-2">${areasBadges}</div>
+                </div>
+            `;
+        }
 
-        let contentHTML = `<p class="text-gray-700 text-base">${item.description}</p>`;
-        
-        contentHTML += `
-            <div class="mt-6">
-                <h4 class="font-semibold text-gray-800">Tech Stack</h4>
-                <div class="flex flex-wrap mt-2">${techBadges}</div>
-            </div>
-        `;
+        // Format
+        if (item.Format && item.Format.length > 0) {
+            const formatBadges = item.Format.map(f => 
+                `<span class="inline-block bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${f}</span>`
+            ).join('');
+            contentHTML += `
+                <div class="mt-4">
+                    <h4 class="font-semibold text-gray-800">Format</h4>
+                    <div class="flex flex-wrap mt-2">${formatBadges}</div>
+                </div>
+            `;
+        }
+
+        // Price
+        if (item.Price && item.Price.length > 0) {
+            const priceBadges = item.Price.map(p => 
+                `<span class="inline-block bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${p}</span>`
+            ).join('');
+            contentHTML += `
+                <div class="mt-4">
+                    <h4 class="font-semibold text-gray-800">Price</h4>
+                    <div class="flex flex-wrap mt-2">${priceBadges}</div>
+                </div>
+            `;
+        }
+
+        // Link
+        if (item.Link) {
+            contentHTML += `
+                <div class="mt-4">
+                    <h4 class="font-semibold text-gray-800">Link</h4>
+                    <a href="${item.Link}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">${item.Link}</a>
+                </div>
+            `;
+        }
+
+        // Further Info
+        if (item['Further info']) {
+            contentHTML += `
+                <div class="mt-4">
+                    <h4 class="font-semibold text-gray-800">Further Information</h4>
+                    <p class="text-gray-700">${item['Further info']}</p>
+                </div>
+            `;
+        }
 
         modalContent.innerHTML = contentHTML;
         infoModalContainer.classList.remove('hidden');
         setTimeout(() => infoModal.classList.remove('hidden'), 10);
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
     }
 
     /**
@@ -157,15 +241,18 @@ document.addEventListener('DOMContentLoaded', function () {
         infoModal.classList.add('hidden');
         setTimeout(() => {
             infoModalContainer.classList.add('hidden');
-            document.body.style.overflow = '';
+            document.body.style.overflow = ''; // Restore scrolling
         }, 300);
     }
 
     // --- EVENT LISTENERS ---
     
+    // Listen for changes on the filter form to re-filter data
     filterForm.addEventListener('change', filterData);
+    // When reset button is clicked, reset filters and then re-filter to show all data
     filterForm.addEventListener('reset', () => { setTimeout(filterData, 0); });
 
+    // Event delegation for clicks on resource cards to open the modal
     resultsGrid.addEventListener('click', (e) => {
         const card = e.target.closest('.resource-card');
         if (card) {
@@ -173,9 +260,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Close modal listeners
     modalCloseButton.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', closeModal);
 
+    // Close modal on Escape key press
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !infoModalContainer.classList.contains('hidden')) {
             closeModal();
@@ -183,6 +272,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // --- INITIALIZATION ---
-    populateFilters();
-    populateResults(database);
+    fetchDatabase(); // Start by fetching the database
 });
