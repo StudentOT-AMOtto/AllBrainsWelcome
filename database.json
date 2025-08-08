@@ -1,0 +1,93 @@
+[
+    {
+        "Index":1,
+        "Name":"Goblin Tools",
+        "Summary":"A collection of small, simple tools, for when things feel too big or complicated. 1) Magic To-do: Break down to-do items; 2) Formalizer: Text transformers for tone; 3) Judge: Read a text for emotion; 4) Professor: Explain anything; 5) Consultant: Help me decide; 6) Estimator: Guess an activity's timeframe for completion; 7) Compiler: Turn a brain-dump into actions; 8) Chef: Create a recipe from ingredients.",
+        "Areas of support":[
+			"Organisation and Time management", 
+			"Processing and Memory",
+			"Writing"
+		],
+        "Format":[
+            "Website",
+            "App"
+        ],
+        "Link":"https:\/\/goblin.tools\/",
+        "Price":[
+            "Free"
+        ],
+        "Further info":"Free website, paid app (one-time fee)"
+    },
+    {
+        "Index":2,
+        "Name":"Brain in Hand",
+        "Summary":"Brain in Hand is a hybrid support system for people with anxiety-based mental health challenges. It combines digital and human support to help people manage feelings of overwhelm, to find motivation to do things that matter to them, and to cope with everyday anxiety. With Brain in Hand, people have managed to become more independent, travel alone, deal with university life, and much more. You decide how it can best support you in what you want to achieve.",
+        "Areas of support":[
+		"Organisation and Time management",
+		"Processing and Memory",
+		"Routine, Structure and Change",
+		"Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+		],
+        "Format":[
+            "Hybrid system"
+        ],
+        "Link":"https:\/\/braininhand.co.uk\/",
+        "Price":[
+            "Paid"
+        ],
+        "Further info":"Funding options: Through DSA\/ Access to Work. Can also self-fund but expensive (\u00a31000+)"
+    },
+    {
+        "Index":3,
+        "Name":"Finch",
+        "Summary":"Finch is a self-care pet app that helps you feel prepared and positive, one day at a time. Take care of your pet by taking care of yourself! Choose from a wide variety of self-care exercises personalized for you.",
+        "Areas of support":[
+		"Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+		],
+        "Format":[
+            "App"
+        ],
+        "Link":"https:\/\/finchcare.com\/",
+        "Price":[
+            "Free",
+            "Paid"
+        ],
+        "Further info":"Free version with paid option for enhanced features"
+    },
+    {
+        "Index":4,
+        "Name":"Dragon Medical One Speech Recognition Software",
+        "Summary":"A cloud-based speech recognition platform for healthcare professionals that converts their spoken words into text, improving documentation efficiency and freeing up time for patient care. It features a medical-specific vocabulary, instant accuracy with no user training required, cloud hosting for accessibility across devices, and integration with electronic health records (EHRs). The system uses artificial intelligence to capture clinical documentation quickly and accurately, acting as a companion to the clinician.",
+        "Areas of support":[
+		"Writing, Processing and Memory",
+		"Organisation and Time management"
+		],
+        "Format":[
+            "Software"
+        ],
+        "Link":"https:\/\/www.microsoft.com\/en-gb\/health-solutions\/clinical-workflow\/dragon-medical-one",
+        "Price":[
+            "Paid"
+        ],
+        "Further info":null
+    },
+    {
+        "Index":5,
+        "Name":"Otter.AI",
+        "Summary":"Taking notes during meetings or transcribing conversations can be time-consuming and distracting. Otter.ai streamlines this process by converting your voice interactions into searchable, shareable smart notes. Whether you're in a meeting, conducting an interview, brainstorming on the go, or transcribing existing recordings, Otter.ai enhances your productivity. Additionally, you can capture photos\u2014such as whiteboard content or speaker slides-durin a recording, and Otter.ai will seamlessly integrate them into your transcripts. This comprehensive approach ensures you never miss a detail.",
+        "Areas of support":[
+		"Organisation and Time management, Processing and Memory", 
+		"Writing"
+		],
+        "Format":[
+            "Software",
+            "App"
+        ],
+        "Link":"https:\/\/otter.ai\/",
+        "Price":[
+            "Free",
+            "Paid"
+        ],
+        "Further info":null
+    }
+]
