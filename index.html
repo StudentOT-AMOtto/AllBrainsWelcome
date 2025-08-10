@@ -15,7 +15,7 @@
         /* Base styles for the entire body */
         body {
             font-family: 'Inter', sans-serif; /* Sets the primary font for the entire page */
-            background-color: #f8fafc; /* Light gray background color (Tailwind gray-50 equivalent) */
+            background-color: #d3e687; /* Changed main background color */
         }
 
         /* Accessibility: Focus styles for keyboard navigation */
@@ -87,7 +87,7 @@
     </header>
     
     <!-- Description Section -->
-    <section class="bg-blue-50 border-b border-blue-200">
+    <section class="bg-[#f6d75c] border-b border-gray-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <h1 class="text-2xl font-bold text-gray-900 mb-2 text-center">Neurodiversity & Assistive Technology Resource Hub</h1>
             <p class="text-center text-gray-700 max-w-4xl mx-auto">
@@ -102,7 +102,7 @@
             
             <!-- Filters Section (Left Sidebar): Contains interactive checkboxes for filtering -->
             <aside class="lg:col-span-1 mb-8 lg:mb-0">
-                <div class="bg-white p-6 rounded-lg shadow-sm filter-sidebar">
+                <div class="bg-white p-6 rounded-lg shadow-sm filter-sidebar border-2 border-[#8c52ff]">
                     <h2 class="text-xl font-semibold mb-4 text-gray-900">Filters</h2>
                     <form id="filter-form">
                         <!-- Areas of Support Filter Group -->
@@ -136,8 +136,14 @@
 
             <!-- Results Section (Main Area): Displays filtered resources -->
             <section class="lg:col-span-3">
-                <div class="bg-white p-4 rounded-lg shadow-sm mb-4 flex items-center justify-between">
-                    <h2 id="results-count" class="text-lg font-medium text-gray-700">Loading results...</h2>
+                <div class="bg-white p-4 rounded-lg shadow-sm mb-4 flex items-center justify-between gap-4 border-2 border-[#8c52ff]">
+                    <h2 id="results-count" class="text-lg font-medium text-gray-700 flex-shrink-0">Loading results...</h2>
+                    <div class="relative w-full max-w-xs">
+                        <input type="text" id="search-bar" placeholder="Search resources..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        </div>
+                    </div>
                 </div>
                 <!-- Grid for displaying resource cards -->
                 <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
@@ -147,7 +153,7 @@
                  <div id="no-results" class="hidden text-center py-16">
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
                     <h3 class="mt-2 text-lg font-medium text-gray-900">No Results Found</h3>
-                    <p class="mt-1 text-sm text-gray-500">Try adjusting your filters to find what you're looking for.</p>
+                    <p class="mt-1 text-sm text-gray-500">Try adjusting your search or filters to find what you're looking for.</p>
                   </div>
                 <!-- Loading Indicator: Shown while data is being fetched -->
                 <div id="loading-indicator" class="text-center py-16">
@@ -167,7 +173,7 @@
         <div id="modal-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-75"></div>
         <!-- Modal Panel: The actual content area of the modal -->
         <div class="relative flex items-center justify-center min-h-screen p-4">
-            <div id="info-modal" class="bg-white rounded-lg shadow-xl w-full max-w-2xl transform transition-all">
+            <div id="info-modal" class="bg-[#fff5f5] rounded-lg shadow-xl w-full max-w-2xl transform transition-all border-2 border-[#8c52ff]">
                 <div class="p-6 sm:p-8">
                     <div class="flex items-start justify-between">
                         <h3 id="modal-title" class="text-2xl font-bold text-gray-900"></h3>
@@ -201,6 +207,7 @@
             const areasOfSupportFilters = document.getElementById('areas-of-support-filters');
             const formatFilters = document.getElementById('format-filters');
             const priceFilters = document.getElementById('price-filters');
+            const searchBar = document.getElementById('search-bar');
             const modalContainer = document.getElementById('info-modal-container');
             const modalTitle = document.getElementById('modal-title');
             const modalContent = document.getElementById('modal-content');
@@ -209,6 +216,7 @@
             const resetButton = document.getElementById('reset-filters');
 
             // --- State Management ---
+            let searchTerm = '';
             let activeFilters = {
                 'Areas of support': [],
                 'Format': [],
@@ -253,16 +261,26 @@
             }
 
             /**
-             * Filters and displays the resources based on the active filters.
+             * Filters and displays the resources based on search term and active filters.
              */
             function renderResults() {
+                // 1. Filter by search term first
+                const lowerCaseSearchTerm = searchTerm.toLowerCase();
+                const searchFiltered = database.filter(item => {
+                    const nameMatch = item.Name?.toLowerCase().includes(lowerCaseSearchTerm);
+                    const summaryMatch = item.Summary?.toLowerCase().includes(lowerCaseSearchTerm);
+                    const notesMatch = item['Further info / notes']?.toLowerCase().includes(lowerCaseSearchTerm);
+                    return nameMatch || summaryMatch || notesMatch;
+                });
+
+                // 2. Then, apply active checkbox filters to the search-filtered results
                 const anyFilterActive = Object.values(activeFilters).some(arr => arr.length > 0);
-                let filteredData;
+                let finalFilteredData;
 
                 if (!anyFilterActive) {
-                    filteredData = database;
+                    finalFilteredData = searchFiltered;
                 } else {
-                    filteredData = database.filter(item => {
+                    finalFilteredData = searchFiltered.filter(item => {
                         const areaMatch = activeFilters['Areas of support'].length === 0 || (Array.isArray(item['Areas of support']) && activeFilters['Areas of support'].every(value => item['Areas of support'].includes(value)));
                         const formatMatch = activeFilters['Format'].length === 0 || (Array.isArray(item['Format']) && activeFilters['Format'].every(value => item['Format'].includes(value)));
                         const priceMatch = activeFilters['Price'].length === 0 || (Array.isArray(item['Price']) && activeFilters['Price'].some(value => item['Price'].includes(value)));
@@ -271,12 +289,12 @@
                 }
 
                 resultsGrid.innerHTML = '';
-                resultsCount.textContent = `${filteredData.length} Result${filteredData.length !== 1 ? 's' : ''}`;
-                noResults.classList.toggle('hidden', filteredData.length > 0);
+                resultsCount.textContent = `${finalFilteredData.length} Result${finalFilteredData.length !== 1 ? 's' : ''}`;
+                noResults.classList.toggle('hidden', finalFilteredData.length > 0);
 
-                filteredData.forEach(item => {
+                finalFilteredData.forEach(item => {
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col cursor-pointer';
+                    card.className = 'bg-[#fff5f5] rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col cursor-pointer border-2 border-[#8c52ff]';
                     const createBadge = (text, color) => `<span class="inline-block bg-${color}-100 text-${color}-800 text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${text}</span>`;
                     card.innerHTML = `
                         <div class="p-6 flex-grow">
@@ -349,6 +367,14 @@
                     renderResults();
                 }
             }
+            
+            /**
+             * Handles input in the search bar.
+             */
+            function handleSearchInput(e) {
+                searchTerm = e.target.value;
+                renderResults();
+            }
 
             /**
              * Fetches data and initializes the application.
@@ -373,6 +399,7 @@
 
             // --- Event Listeners ---
             filterForm.addEventListener('input', handleFilterChange);
+            searchBar.addEventListener('input', handleSearchInput);
             
             filterForm.addEventListener('click', (e) => {
                 if (e.target.dataset.action === 'toggle-filters') {
@@ -396,6 +423,8 @@
             resetButton.addEventListener('click', (e) => {
                 e.preventDefault();
                 filterForm.reset();
+                searchBar.value = '';
+                searchTerm = '';
                 activeFilters = { 'Areas of support': [], 'Format': [], 'Price': [] };
                 renderResults();
             });
