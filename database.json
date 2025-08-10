@@ -1,93 +1,720 @@
 [
-    {
-        "Index":1,
-        "Name":"Goblin Tools",
-        "Summary":"A collection of small, simple tools, for when things feel too big or complicated. 1) Magic To-do: Break down to-do items; 2) Formalizer: Text transformers for tone; 3) Judge: Read a text for emotion; 4) Professor: Explain anything; 5) Consultant: Help me decide; 6) Estimator: Guess an activity's timeframe for completion; 7) Compiler: Turn a brain-dump into actions; 8) Chef: Create a recipe from ingredients.",
-        "Areas of support":[
-			"Organisation and Time management", 
-			"Processing and Memory",
-			"Writing"
-		],
-        "Format":[
-            "Website",
-            "App"
-        ],
-        "Link":"https:\/\/goblin.tools\/",
-        "Price":[
-            "Free"
-        ],
-        "Further info":"Free website, paid app (one-time fee)"
-    },
-    {
-        "Index":2,
-        "Name":"Brain in Hand",
-        "Summary":"Brain in Hand is a hybrid support system for people with anxiety-based mental health challenges. It combines digital and human support to help people manage feelings of overwhelm, to find motivation to do things that matter to them, and to cope with everyday anxiety. With Brain in Hand, people have managed to become more independent, travel alone, deal with university life, and much more. You decide how it can best support you in what you want to achieve.",
-        "Areas of support":[
-		"Organisation and Time management",
-		"Processing and Memory",
-		"Routine, Structure and Change",
-		"Self-regulation, Managing Emotions, Confidence, and Self-esteem"
-		],
-        "Format":[
-            "Hybrid system"
-        ],
-        "Link":"https:\/\/braininhand.co.uk\/",
-        "Price":[
-            "Paid"
-        ],
-        "Further info":"Funding options: Through DSA\/ Access to Work. Can also self-fund but expensive (\u00a31000+)"
-    },
-    {
-        "Index":3,
-        "Name":"Finch",
-        "Summary":"Finch is a self-care pet app that helps you feel prepared and positive, one day at a time. Take care of your pet by taking care of yourself! Choose from a wide variety of self-care exercises personalized for you.",
-        "Areas of support":[
-		"Self-regulation, Managing Emotions, Confidence, and Self-esteem"
-		],
-        "Format":[
-            "App"
-        ],
-        "Link":"https:\/\/finchcare.com\/",
-        "Price":[
-            "Free",
-            "Paid"
-        ],
-        "Further info":"Free version with paid option for enhanced features"
-    },
-    {
-        "Index":4,
-        "Name":"Dragon Medical One Speech Recognition Software",
-        "Summary":"A cloud-based speech recognition platform for healthcare professionals that converts their spoken words into text, improving documentation efficiency and freeing up time for patient care. It features a medical-specific vocabulary, instant accuracy with no user training required, cloud hosting for accessibility across devices, and integration with electronic health records (EHRs). The system uses artificial intelligence to capture clinical documentation quickly and accurately, acting as a companion to the clinician.",
-        "Areas of support":[
-		"Writing, Processing and Memory",
-		"Organisation and Time management"
-		],
-        "Format":[
-            "Software"
-        ],
-        "Link":"https:\/\/www.microsoft.com\/en-gb\/health-solutions\/clinical-workflow\/dragon-medical-one",
-        "Price":[
-            "Paid"
-        ],
-        "Further info":null
-    },
-    {
-        "Index":5,
-        "Name":"Otter.AI",
-        "Summary":"Taking notes during meetings or transcribing conversations can be time-consuming and distracting. Otter.ai streamlines this process by converting your voice interactions into searchable, shareable smart notes. Whether you're in a meeting, conducting an interview, brainstorming on the go, or transcribing existing recordings, Otter.ai enhances your productivity. Additionally, you can capture photos\u2014such as whiteboard content or speaker slides-durin a recording, and Otter.ai will seamlessly integrate them into your transcripts. This comprehensive approach ensures you never miss a detail.",
-        "Areas of support":[
-		"Organisation and Time management, Processing and Memory", 
-		"Writing"
-		],
-        "Format":[
-            "Software",
-            "App"
-        ],
-        "Link":"https:\/\/otter.ai\/",
-        "Price":[
-            "Free",
-            "Paid"
-        ],
-        "Further info":null
-    }
+  {
+    "Index": 1,
+    "Name": "Goblin Tools",
+    "Summary": "A collection of small, simple tools, for when things feel too big or complicated. 1) Magic To-do: Break down to-do items; 2) Formalizer: Text transformers for tone; 3) Judge: Read a text for emotion; 4) Professor: Explain anything; 5) Consultant: Help me decide; 6) Estimator: Guess an activity's timeframe for completion; 7) Compiler: Turn a brain-dump into actions; 8) Chef: Create a recipe from ingredients.",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Processing and Memory",
+      "Writing"
+    ],
+    "Format": [
+      "Website",
+      "App"
+    ],
+    "Link": "https://goblin.tools/",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": "Free website, paid app (one-time fee)"
+  },
+  {
+    "Index": 2,
+    "Name": "Brain in Hand",
+    "Summary": "Brain in Hand is a hybrid support system for people with anxiety-based mental health \nchallenges. It combines digital and human support to help people manage feelings of overwhelm, to find motivation to do things that matter to them, and to cope with everyday anxiety. With Brain in Hand, people have managed to become more independent, travel alone, deal with university life, and much more.\nYou decide how it can best support you in what you want to achieve.",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Processing and Memory",
+      "Routine, Structure, and Change",
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "Hybrid system"
+    ],
+    "Link": "https://braininhand.co.uk/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": "Funding options: Through DSA/ Access to Work. Can also self-fund but expensive (£1000+)"
+  },
+  {
+    "Index": 3,
+    "Name": "Finch",
+    "Summary": "Finch is a self-care pet app that helps you feel prepared and positive, one day at a time.\nTake care of your pet by taking care of yourself!\nChoose from a wide variety of self-care exercises personalized for you.",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://finchcare.com/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": "Free version with paid option for enhanced features"
+  },
+  {
+    "Index": 4,
+    "Name": "Dragon Medical One",
+    "Summary": "A cloud-based speech recognition platform for healthcare professionals that converts their spoken words into text, improving documentation efficiency and freeing up time for patient care.\nIt features a medical-specific vocabulary, instant accuracy with no user training required, cloud hosting for accessibility across devices, and integration with electronic health records (EHRs).\nThe system uses artificial intelligence to capture clinical documentation quickly and accurately, acting as a companion to the clinician.\n",
+    "Areas of support": [
+      "Writing",
+      "Processing and Memory",
+      "Organisation and Time management"
+    ],
+    "Format": [
+      "Software"
+    ],
+    "Link": "https://www.microsoft.com/en-gb/health-solutions/clinical-workflow/dragon-medical-one",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 5,
+    "Name": "Otter.AI",
+    "Summary": "A tool that uses artificial intelligence to transcribe speech to text, primarily for meetings and conversations.\nIt can record and transcribe audio in real-time, as well as transcribe pre-recorded audio and video files.\nOtter.ai also offers features like meeting summaries, action item extraction, and collaboration tools",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Processing and Memory",
+      "Writing"
+    ],
+    "Format": [
+      "Software",
+      "App"
+    ],
+    "Link": "https://otter.ai/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 6,
+    "Name": "Microsoft Dictate",
+    "Summary": "Dictation feature lets you use speech-to-text to author content in Office with a microphone and reliable internet connection.\nUse your voice to quickly create documents, emails, notes, presentations, or even slide notes.\n",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Processing and Memory",
+      "Writing"
+    ],
+    "Format": [
+      "Feature"
+    ],
+    "Link": "https://support.microsoft.com/en-gb/office/dictate-in-microsoft-365-eab203e1-d030-43c1-84ef-999b0b9675fe",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": "Free with Microsoft 365 applications, but requires an active Microsoft 365 subscription"
+  },
+  {
+    "Index": 7,
+    "Name": "Read&Write by Everway (previously 'TextHelp')",
+    "Summary": "Read&Write is an inclusion tool that supports neurodivergent employees, multi-lingual teams, and anyone who might find everyday literacy tasks a challenge.\nIt’s a powerful set of reading and writing tools that help anyone who struggles with digital text to excel in their work.",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Writing",
+      "Reading",
+      "Numbers and Mathematics",
+      "Visual processing",
+      "Auditory processing"
+    ],
+    "Format": [
+      "Browser Extension",
+      "Software"
+    ],
+    "Link": "https://www.texthelp.com/en-gb/products/read-and-write-workplace/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 8,
+    "Name": "ReachDeck",
+    "Summary": "ReachDeck is an all-in-one digital inclusion solution for organisations to make their online content accessible and usable to everyone.\nReachDeck helps you to improve the accessibility, readability and reach of your online content; protect your communications, content and reputation;\nand empower your whole team to communicate with confidence",
+    "Areas of support": [
+      "Writing",
+      "Reading",
+      "Visual processing",
+      "Communication and Social interaction"
+    ],
+    "Format": [
+      "Software"
+    ],
+    "Link": "https://www.texthelp.com/en-gb/products/reachdeck/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 9,
+    "Name": "Coloured overlays plastic",
+    "Summary": "Coloured overlays, also known as tinted overlays, are thin sheets of coloured plastic that can be placed over text to help improve reading.\nIts purpose is to act as a reading aid for those with visual stress and learning difficulties.\nThese coloured overlays come in a range of colours including purple, blue, yellow, pink, orange, green and grey.\n",
+    "Areas of support": [
+      "Reading",
+      "Visual processing"
+    ],
+    "Format": [
+      "Equipment"
+    ],
+    "Link": "https://www.thedyslexiashop.co.uk/collections/coloured-overlays?srsltid=AfmBOorgba1GCBVOiQed__eL-jYxy4GuUS4DeDMorkkcvoYWbrTaO6T9",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 10,
+    "Name": "C-Pen Secure Reader 2",
+    "Summary": "An assistive device for independent reading and understanding, especially designed to protect integrity in workplace use",
+    "Areas of support": [
+      "Reading",
+      "Visual processing"
+    ],
+    "Format": [
+      "Equipment"
+    ],
+    "Link": "https://cpen.com/products/c-pen-secure-2/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 11,
+    "Name": "ReMarkable or E-ink tablets",
+    "Summary": "E-ink tablets (also known as eNotes, eWriters and ePaper) are tablets that are designed to provide a comfortable reading and writing experience by using a screen technology (e-ink) that is much more akin to real paper (and easier on the eyes) than conventional LCD screens.",
+    "Areas of support": [
+      "Writing",
+      "Organisation and Time management",
+      "Visual processing"
+    ],
+    "Format": [
+      "Equipment"
+    ],
+    "Link": "https://remarkable.com/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": "For a guide to choosing e-writing tablets available: https://ewritable.net/"
+  },
+  {
+    "Index": 12,
+    "Name": "LunaTask.app",
+    "Summary": "An all-in-one encrypted to-do list, habit tracker, journaling, life-tracking and notes app that remembers stuff for you \nand keeps track of your mental well-being ",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Routine, Structure, and Change",
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Processing and Memory"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://lunatask.app/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 13,
+    "Name": "Inspiration 11",
+    "Summary": "Visual thinking tool to create concept maps, mind maps, diagrams, graphic organisers, outlines, and presentations",
+    "Areas of support": [
+      "Reading",
+      "Writing",
+      "Visual processing",
+      "Organisation and Time management",
+      "Processing and Memory"
+    ],
+    "Format": [
+      "Software",
+      "Browser Extension"
+    ],
+    "Link": "https://www.inspiration-at.com/inspiration-11/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 14,
+    "Name": "Grammarly",
+    "Summary": "\nGrammarly is a digital writing assistant that uses AI to help users improve their written communication.\nIt checks for grammar, spelling, punctuation, clarity, and style, offering suggestions for improvement.\nGrammarly works across various platforms, including websites and apps like Gmail, Google Docs, and Microsoft Word.\nIt also has generative AI features to help with brainstorming, researching, and outlining, as well as plagiarism detection",
+    "Areas of support": [
+      "Writing",
+      "Organisation and Time management",
+      "Communication and Social interaction",
+      "Impulsivity and Hyperactivity",
+      "Concentration and Focus"
+    ],
+    "Format": [
+      "Website",
+      "App",
+      "Browser Extension"
+    ],
+    "Link": "https://www.grammarly.com/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 15,
+    "Name": "Bionify",
+    "Summary": "Read any public article faster with Bionify",
+    "Areas of support": [
+      "Visual processing",
+      "Sensory sensitivity",
+      "Reading"
+    ],
+    "Format": [
+      "Website"
+    ],
+    "Link": "https://bionify.xyz/",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 16,
+    "Name": "OpenDyslexic for Chrome",
+    "Summary": "OpenDyslexic is a free, open-source font designed to make reading easier for people with dyslexia.\nThis extension replaces all fonts on web pages with the OpenDyslexic font, making content more readable and accessible.",
+    "Areas of support": [
+      "Visual processing",
+      "Reading"
+    ],
+    "Format": [
+      "Browser Extension"
+    ],
+    "Link": "https://chromewebstore.google.com/detail/opendyslexic-for-chrome/cdnapgfjopgaggbmfgbiinmmbdcglnam",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 17,
+    "Name": "Immersive Reader",
+    "Summary": "Immersive Reader is a free feature in various Microsoft 365 apps like Word, OneNote, Outlook, Teams, and Microsoft edge, designed to improve reading comprehension and accessibility for users of all ages and abilities.\nIt offers features such as text-to-speech, customization of text size, spacing, and background colors, syllable breakdown, and highlighting of different parts of speech.\nIt also includes a picture dictionary and translation capabilities.",
+    "Areas of support": [
+      "Concentration and Focus",
+      "Processing and Memory",
+      "Communication and Social interaction",
+      "Reading",
+      "Visual processing",
+      "Sensory sensitivity",
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "Feature"
+    ],
+    "Link": "https://support.microsoft.com/en-gb/office/use-immersive-reader-in-word-a857949f-c91e-4c97-977c-a4efcaf9b3c1",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 18,
+    "Name": "AHEAD app",
+    "Summary": "A personalized pocket coach that provides bite-sized, science-driven tools to boost emotional intelligence.\nStart your personalized journey built by behaviour scientists, understand the why behind your emotions better, explore 100+ science proven techniques, and track and watch yourself progress every day.",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Impulsivity and Hyperactivity",
+      "Sensory sensitivity"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://www.ahead-app.com/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": "Ahead offers a one-time 7-day free trial for new users to explore the app's features before committing to a subscriptio"
+  },
+  {
+    "Index": 19,
+    "Name": "Calm app",
+    "Summary": "Meditate daily with calm- whether you have 60 seconds or 60 minutes, Calm can help you build a habit of mindfulness",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Sensory sensitivity",
+      "Auditory processing"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://www.calm.com/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": "The free version offers limited access to content, the paid version \noffers more features such as guided meditations, music for focusing, relaxation and sleep, and calming nature sounds"
+  },
+  {
+    "Index": 20,
+    "Name": "Headspace app",
+    "Summary": "It provides mindfulness tools for everyday life, including meditations, sleepcasts, mindful movement and focus exercises.",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Sensory sensitivity",
+      "Concentration and Focus",
+      "Impulsivity and Hyperactivity",
+      "Auditory processing"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://www.headspace.com/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": "Subscription-based, but with a free trial.\nYou can unlock the entire Headspace library during your free trial.\nDuring the trial, you will have access to all of our content, so you can explore and discover what works for you.\nAfter the trial ends, you can sign up for a headspace subscription or you can cancel."
+  },
+  {
+    "Index": 21,
+    "Name": "Sweepy",
+    "Summary": "An app that helps you keep your home clean and organized. Create your house cleaning schedule to split your chores with your family and turn your cleaning routine into a game.",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Routine, Structure, and Change",
+      "Processing and Memory"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://sweepy.com/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": "Free version with limited content for basic task tracking but requires a paid subscription for premium features like adding household members, automated task scheduling, and detailed performance insights"
+  },
+  {
+    "Index": 22,
+    "Name": "Ayoa",
+    "Summary": "Mind-mapping tool for creativity and productivity",
+    "Areas of support": [
+      "Processing and Memory",
+      "Organisation and Time management",
+      "Visual processing",
+      "Writing",
+      "Concentration and Focus"
+    ],
+    "Format": [
+      "Software"
+    ],
+    "Link": "https://www.ayoa.com/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 23,
+    "Name": "MindView AT",
+    "Summary": "An assistive mind mapping software application that has been optimized for neurodiverse individuals and made truly accessible for users with disabilities",
+    "Areas of support": [
+      "Processing and Memory",
+      "Organisation and Time management",
+      "Visual processing",
+      "Writing",
+      "Concentration and Focus"
+    ],
+    "Format": [
+      "Software"
+    ],
+    "Link": "https://www.matchware.com/assistive-technology-software#",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 24,
+    "Name": "Chef GPT - PantryChef",
+    "Summary": "PantryChef- Add the ingredients you have at home, select what meal you want to cook, the kitchen utensils you have, how much time you have, your skill level, and it generates a recipe.",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Processing and Memory",
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "Website"
+    ],
+    "Link": "https://www.chefgpt.xyz/",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 25,
+    "Name": "Loop earplugs",
+    "Summary": "Helps prevent sensory overload - Loop does not block sound, but \nfilters it. Music and speech remain clear, just less loud",
+    "Areas of support": [
+      "Auditory processing",
+      "Sensory sensitivity",
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Communication and Social interaction"
+    ],
+    "Format": [
+      "Equipment"
+    ],
+    "Link": "https://www.loopearplugs.com/",
+    "Price": [
+      "Paid"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 26,
+    "Name": "Forest app",
+    "Summary": "It allows you to keep focus on a task when you are likely to be distracted by your phone.\nThis can help you with preventing procrastination on tasks and getting distracted.\nThe app allows you to set timers for how long you want to constantly work for e.g.\n30 minutes and gives you a reasonable break to keep motivation high.\nIf you steer off task and get distracted by other apps, the tree which grows from completing the work time will die and you will have to start over, this is good motivation for people so they get rewarded by growing a forest the more they work.\nForest also works with trees for the future meaning that every time you fully grow a tree, one is planted in real life which means that while you are completing tasks, you are also helping the environment.\n",
+    "Areas of support": [
+      "Concentration and Focus",
+      "Routine, Structure, and Change"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://www.forestapp.cc/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 27,
+    "Name": "Molehill mountain app",
+    "Summary": "When you need to write down your worries and self-manage your day-to-day anxiety. The app uses research- based evidence to create exercises and practical tips to control anxiety throughout the day.",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Communication and Social interaction"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://www.autistica.org.uk/molehill-mountain",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 28,
+    "Name": "Routinery app",
+    "Summary": "A great app for those who struggle to make and keep daily routines.\nThe app is free and available on Apple and Android meaning that anyone who needs a boost with routines has access.\nIn the app, a ‘bot’ welcomes you and helps you create a morning routine with suggestions on what you may want to do e.g., making your bed, drinking water or showering.\nWhen you complete a routine, you get a seed. In order to keep the seed alive, you must follow the routine you have set up, creating a motivation to want to complete the little tasks.\nIn the app, you can create as many ‘routines’ as you need to help you through the day with specific time frames from when you want to complete them",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Routine, Structure, and Change"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://www.routinery.app/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 29,
+    "Name": "Habitica app",
+    "Summary": "A routine help app which allows you to complete tasks with a reward.\nFirstly, you select the areas you are trying to be more productive in, such as school and self-care.\nYou then set up tasks for yourself to complete in these areas and when you complete a task, such as finishing an essay, you get rewarded with points.\nWhen you collect them, you get rewarded with things within the app, like virtual pets.\nIn Habitica, you can also join friends to take on quests or go solo and do monthly/ weekly challenges set by others.\nThe app is free and available on Apple, Android and online meaning that anyone can complete tasks from anywhere without needing to have a specific type of device.",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Routine, Structure, and Change"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://habitica.com/static/home",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 30,
+    "Name": "Tappy: Self-care fidgeter app",
+    "Summary": "A relaxation and mindfulness tool for iOS devices designed to help users reduce stress and anxiety through satisfying haptic feedback and sound effects.\nThe app includes various features such as interactive fidget games, guided meditations, soundscapes, breathing exercises, and mood and habit trackers.\n",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://apps.apple.com/gb/app/tappy-self-care-fidgeter/id1492017640",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 31,
+    "Name": "Flora green focus app",
+    "Summary": "A way to stay off your phone, clear to-do lists, and build positive, life-changing habits.\nWhenever you want to make progress toward your goals, grow trees in Flora!",
+    "Areas of support": [
+      "Routine, Structure, and Change",
+      "Concentration and Focus"
+    ],
+    "Format": [
+      "App",
+      "Browser Extension"
+    ],
+    "Link": "https://flora.appfinca.com/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 32,
+    "Name": "Me + Lifestyle Routine app",
+    "Summary": "It provides a daily routine planner and self-care schedule to establish a healthy habit and help with your daily routine.\nBy repeating good actions daily and following your planner and self-care schedule, you will gain a new outlook, confidence, and strength.\nObstacles that seemed unsurpassable will soon be overcome and forgotten",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Routine, Structure, and Change",
+      "Organisation and Time management"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://enerjoy.life/me-plus/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": "App store: https://apps.apple.com/gb/app/me-lifestyle-routine/id1596403446 Google Play Store: https://play.google.com/store/apps/details/Me_Daily_Routine_Planner?id=daily.planner.routine.habits&hl=en_AU "
+  },
+  {
+    "Index": 33,
+    "Name": "I am - Daily affirmations app",
+    "Summary": "It is a daily affirmation and reminder app where you can choose and receive daily affirmations and is a simple way to build more positivity in your life.",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Routine, Structure, and Change"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://theiam.app/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 34,
+    "Name": "DailyBean- simplest journal app",
+    "Summary": "A simple app for recording your day with just a few taps, focusing on mood tracking and daily activities through a \nmonthly calendar and colorful icons. Users select mood \"beans\" and activity icons to create a simple diary entry, add a picture, and a brief note.\nThe app also provides weekly and monthly statistics to analyze mood patterns and identify activities that influence feelings",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem",
+      "Routine, Structure, and Change"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://apps.apple.com/gb/app/dailybean-simplest-journal/id1553223828\n",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": "Google Play Store link:\nhttps://play.google.com/store/apps/details?id=com.bluesignum.bluediary&hl=en_GB \n"
+  },
+  {
+    "Index": 35,
+    "Name": "Medisafe Pill Reminder app",
+    "Summary": "Pill reminder and medication tracker app",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Routine, Structure, and Change",
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://www.medisafe.com/download-medisafe-app/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 36,
+    "Name": "Owaves: My BodyClock app",
+    "Summary": "Owaves is the first calendaring system designed to optimize your own personal circadian rhythm, also called the \"body clock\".\nIt is designed to let you prioritize vital, life-sustaining activities like exercise, nutrition, sleep, relaxation, and relationships, alongside work, school, productivity tasks and errands.",
+    "Areas of support": [
+      "Organisation and Time management",
+      "Routine, Structure, and Change",
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "App"
+    ],
+    "Link": "https://owaves.com/",
+    "Price": [
+      "Free with Paid options"
+    ],
+    "Further info / notes": "currently available for apple users only https://apps.apple.com/gb/app/owaves-my-bodyclock/id869648628 "
+  },
+  {
+    "Index": 37,
+    "Name": "Google Earth app",
+    "Summary": "Can help individuals prepare by looking at new places in advance of visiting",
+    "Areas of support": [
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "App",
+      "Website"
+    ],
+    "Link": "https://earth.google.com/",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 38,
+    "Name": "Google Keep",
+    "Summary": "Quickly capture what's on your mind and get a reminder later at the right place or time.\nSpeak a voice memo on the go and have it automatically transcribed.\nGrab a photo of a poster, receipt or document and easily organise or find it later in search.\nGoogle Keep makes it easy to capture a thought or list for yourself and share it with friends and family.",
+    "Areas of support": [
+      "Impulsivity and Hyperactivity",
+      "Writing",
+      "Organisation and Time management"
+    ],
+    "Format": [
+      "App",
+      "Website"
+    ],
+    "Link": "https://keep.google.com/u/0/",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": ""
+  },
+  {
+    "Index": 39,
+    "Name": "Access Able",
+    "Summary": "Access Guides with accessible information for disabled people, carers, wheelchair users.",
+    "Areas of support": [
+      "Sensory sensitivity",
+      "Movement and Co-ordination",
+      "Organisation and Time management",
+      "Self-regulation, Managing Emotions, Confidence, and Self-esteem"
+    ],
+    "Format": [
+      "Website",
+      "App"
+    ],
+    "Link": "https://www.accessable.co.uk/",
+    "Price": [
+      "Free"
+    ],
+    "Further info / notes": ""
+  }
 ]
