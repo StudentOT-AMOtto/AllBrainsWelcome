@@ -27,15 +27,15 @@
         }
 
         /* Animation for the modal transition */
-        /* Defines a fun, springy transition effect for the modal */
+        /* Defines a more pronounced, springy transition effect for the modal */
         #info-modal {
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy spring effect */
         }
 
         /* State when the modal container is hidden */
-        /* When the parent container is hidden, the modal itself scales down, rotates slightly, and fades out */
+        /* When the parent container is hidden, the modal starts from a lower, smaller, and faded-out state */
         #info-modal-container.hidden #info-modal {
-            transform: scale(0.9) rotate(-5deg); /* Shrinks and tilts the modal */
+            transform: translateY(50px) scale(0.8); /* Starts lower and smaller */
             opacity: 0; /* Makes it completely transparent */
             pointer-events: none; /* Prevents interaction with the hidden modal */
         }
@@ -57,6 +57,7 @@
             }
              #info-modal-container.hidden #info-modal {
                 transform: scale(0.95);
+                transform-origin: center;
              }
         }
 
