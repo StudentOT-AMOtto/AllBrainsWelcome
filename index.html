@@ -1,185 +1,210 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- The 'light' class is the default. The script in the head will change it to 'dark' if needed. -->
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Brains Welcome</title>
+    
+    <!-- Tailwind CSS Configuration -->
+    <script>
+        // Configure Tailwind to use the 'class' strategy for dark mode.
+        // This must come BEFORE the main Tailwind script.
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    
+    <!-- Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Initial Theme Loader Script -->
+    <!-- This script runs immediately to prevent a "flash of incorrect theme" on page load. -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+        } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+        }
+    </script>
+
+    <!-- Custom Stylesheet -->
     <style>
-        /* Base styles for the entire body */
+        /* Base styles for the body */
         body {
-            font-family: 'Inter', sans-serif; /* Sets the primary font for the entire page */
-            background-color: #f8fafc; /* Light gray background color (Tailwind gray-50 equivalent) */
+            font-family: 'Inter', sans-serif;
+            @apply bg-gray-50 text-gray-800 transition-colors duration-300;
+        }
+        .dark body {
+            @apply bg-gray-900 text-gray-200;
         }
 
-        /* Accessibility: Focus styles for keyboard navigation */
-        /* Enhances usability for users navigating with the keyboard by providing clear visual focus indicators */
+        /* Accessibility: Focus styles */
         :focus-visible {
-            outline: 3px solid #2563eb; /* Blue outline (Tailwind blue-600) */
-            outline-offset: 2px; /* Adds space between the outline and the element */
-            border-radius: 6px; /* Slightly rounded corners for the outline */
+            @apply outline-blue-600 outline-offset-2 outline-3 rounded-md;
         }
 
-        /* Animation for the modal - updated for a fun effect */
+        /* Modal Animation */
         @keyframes fun-modal-animation {
-            0% {
-                opacity: 0;
-                transform: scale(0.7) rotate(-10deg) translateY(2rem);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg) translateY(0);
-            }
+            0% { opacity: 0; transform: scale(0.7) rotate(-10deg) translateY(2rem); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg) translateY(0); }
         }
         
-        /* State when the modal container is hidden */
         #info-modal-container.hidden #info-modal {
             opacity: 0;
             pointer-events: none;
         }
         
-        /* Apply animation when modal becomes visible */
         #info-modal-container:not(.hidden) #info-modal {
             animation: fun-modal-animation 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
-        /* Independent scrolling for filters */
+        /* Sticky Filter Sidebar */
         .filter-sidebar {
             position: sticky;
-            top: 6rem; /* Adjust based on header height */
-            height: calc(100vh - 8rem); /* Full height minus header and some padding */
+            top: 6rem;
+            height: calc(100vh - 8rem);
             overflow-y: auto;
         }
 
-        /* Reduced motion accessibility */
-        /* Disables animations for users who prefer reduced motion, improving accessibility */
+        /* Reduced Motion Accessibility */
         @media (prefers-reduced-motion: reduce) {
             #info-modal-container:not(.hidden) #info-modal {
                 animation: none;
             }
+            body, .transition-colors {
+                transition: none;
+            }
         }
 
-        /* Class to truncate text to 2 lines */
-        /* This CSS property is specific to WebKit browsers (like Chrome, Safari) */
+        /* Text Truncation */
         .line-clamp-2 {
-            display: -webkit-box; /* Enables the flexible box model for line clamping */
-            -webkit-line-clamp: 2; /* Limits the text to a maximum of 2 lines */
-            -webkit-box-orient: vertical; /* Stacks lines vertically */
-            overflow: hidden; /* Hides any overflowing content */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body>
 
-    <header class="bg-white shadow-sm sticky top-0 z-20">
+    <!-- Header Section -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-20 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-center h-16">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Title -->
                 <div class="flex-shrink-0">
                     <a href="#" class="flex items-center space-x-2">
                         <svg class="h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                         </svg>
-                        <span class="text-xl font-bold text-gray-900">All Brains Welcome</span>
+                        <span class="text-xl font-bold text-gray-900 dark:text-white">All Brains Welcome</span>
                     </a>
+                </div>
+                <!-- Theme Toggle Button -->
+                <div class="flex items-center">
+                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
     
-    <section class="bg-blue-50 border-b border-blue-200">
+    <!-- Description Section -->
+    <section class="bg-blue-50 dark:bg-gray-800/50 border-b border-blue-200 dark:border-gray-700 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 class="text-2xl font-bold text-gray-900 mb-2 text-center">Neurodiversity & Assistive Technology Resource Hub</h1>
-            <p class="text-center text-gray-700 max-w-4xl mx-auto">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">Neurodiversity & Assistive Technology Resource Hub</h1>
+            <p class="text-center text-gray-700 dark:text-gray-300 max-w-4xl mx-auto">
                 Welcome to the All Brains Welcome resource hub. This page is designed to help you discover a wide range of tools, apps, and strategies that can support various aspects of neurodiversity. Use the filters on the left to find resources tailored to your specific needs, whether it's for organization, focus, communication, or something else. Click on any resource card to learn more about it.
             </p>
         </div>
     </section>
 
+    <!-- Main Content Area -->
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
         <div class="lg:grid lg:grid-cols-4 lg:gap-8">
             
+            <!-- Filters Section -->
             <aside class="lg:col-span-1 mb-8 lg:mb-0">
-                <div class="bg-white p-6 rounded-lg shadow-sm filter-sidebar">
-                    <h2 class="text-xl font-semibold mb-4 text-gray-900">Filters</h2>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm filter-sidebar transition-colors duration-300">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Filters</h2>
                     <form id="filter-form">
                         <div class="mb-6">
-                            <h3 class="font-semibold mb-3 text-gray-700">Areas of Support</h3>
-                            <div id="areas-of-support-filters" class="space-y-2">
-                                </div>
+                            <h3 class="font-semibold mb-3 text-gray-700 dark:text-gray-300">Areas of Support</h3>
+                            <div id="areas-of-support-filters" class="space-y-2"></div>
                         </div>
                         <div class="mb-6">
-                            <h3 class="font-semibold mb-3 text-gray-700">Format</h3>
-                            <div id="format-filters" class="space-y-2">
-                                </div>
+                            <h3 class="font-semibold mb-3 text-gray-700 dark:text-gray-300">Format</h3>
+                            <div id="format-filters" class="space-y-2"></div>
                         </div>
-                        <div class="mb-6">
-                            <h3 class="font-semibold mb-3 text-gray-700">Price</h3>
-                            <div id="price-filters" class="space-y-2">
-                                </div>
+                         <div class="mb-6">
+                            <h3 class="font-semibold mb-3 text-gray-700 dark:text-gray-300">Price</h3>
+                            <div id="price-filters" class="space-y-2"></div>
                         </div>
-                        <button type="reset" id="reset-filters" class="w-full px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 transition-colors">
+                        <button type="reset" id="reset-filters" class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300">
                             Reset Filters
                         </button>
                     </form>
                 </div>
             </aside>
 
+            <!-- Results Section -->
             <section class="lg:col-span-3">
-                <div class="bg-white p-4 rounded-lg shadow-sm mb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <h2 id="results-count" class="text-lg font-medium text-gray-700">Loading results...</h2>
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-4 flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors duration-300">
+                    <h2 id="results-count" class="text-lg font-medium text-gray-700 dark:text-gray-300">Loading results...</h2>
                     <div class="relative w-full sm:w-64">
                          <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                               <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-                            </svg>
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
                          </span>
-                         <input type="text" id="search-bar" placeholder="Search resources..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                         <input type="text" id="search-bar" placeholder="Search resources..." class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
                     </div>
                 </div>
-                <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-                    </div>
-                <div id="no-results" class="hidden text-center py-16">
+                <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6"></div>
+                 <div id="no-results" class="hidden text-center py-16">
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
-                    <h3 class="mt-2 text-lg font-medium text-gray-900">No Results Found</h3>
-                    <p class="mt-1 text-sm text-gray-500">Try adjusting your filters or search to find what you're looking for.</p>
+                    <h3 class="mt-2 text-lg font-medium text-gray-900 dark:text-white">No Results Found</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Try adjusting your filters or search to find what you're looking for.</p>
                   </div>
                 <div id="loading-indicator" class="text-center py-16">
-                    <svg class="animate-spin mx-auto h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <p class="mt-2 text-gray-600">Loading data...</p>
+                    <svg class="animate-spin mx-auto h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">Loading data...</p>
                 </div>
             </section>
         </div>
     </main>
 
+    <!-- Details Modal -->
     <div id="info-modal-container" class="fixed inset-0 z-40 hidden" role="dialog" aria-modal="true">
-        <div id="modal-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-75"></div>
+        <div id="modal-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-75 dark:bg-opacity-80"></div>
         <div class="relative flex items-center justify-center min-h-screen p-4">
-            <div id="info-modal" class="bg-white rounded-lg shadow-xl w-full max-w-2xl transform">
+            <div id="info-modal" class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl transform">
                 <div class="p-6 sm:p-8">
                     <div class="flex items-start justify-between">
-                        <h3 id="modal-title" class="text-2xl font-bold text-gray-900"></h3>
-                        <button id="modal-close-button" type="button" class="p-1 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-600">
+                        <h3 id="modal-title" class="text-2xl font-bold text-gray-900 dark:text-white"></h3>
+                        <button id="modal-close-button" type="button" class="p-1 rounded-full text-gray-400 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-white">
                             <span class="sr-only">Close</span>
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                         </button>
                     </div>
-                    <div id="modal-content" class="mt-4 space-y-4">
-                        </div>
+                    <div id="modal-content" class="mt-4 space-y-4"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Custom JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-            // Global variable to hold the database data once fetched.
             let database = [];
             
             // --- Element Selectors ---
@@ -198,20 +223,41 @@
             const modalCloseButton = document.getElementById('modal-close-button');
             const modalOverlay = document.getElementById('modal-overlay');
             const resetButton = document.getElementById('reset-filters');
+            const themeToggleButton = document.getElementById('theme-toggle');
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
             // --- State Management ---
-            let activeFilters = {
-                'Areas of support': [],
-                'Format': [],
-                'Price': []
-            };
+            let activeFilters = { 'Areas of support': [], 'Format': [], 'Price': [] };
             let activeSearchTerm = '';
 
-            // --- Functions ---
+            // --- Theme Functions ---
+            
+            /**
+             * Updates the theme toggle button icons based on the current theme.
+             */
+            function updateThemeIcons() {
+                if (document.documentElement.classList.contains('dark')) {
+                    themeToggleLightIcon.classList.remove('hidden');
+                    themeToggleDarkIcon.classList.add('hidden');
+                } else {
+                    themeToggleLightIcon.classList.add('hidden');
+                    themeToggleDarkIcon.classList.remove('hidden');
+                }
+            }
 
             /**
-             * Creates and populates the filter checkboxes with a "show more" button.
+             * Toggles the color theme and saves the preference.
              */
+            function handleThemeToggle() {
+                const isDark = document.documentElement.classList.toggle('dark');
+                document.documentElement.classList.toggle('light', !isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateThemeIcons();
+            }
+
+            // --- Main App Functions ---
+
             function createFilters() {
                 const areas = [ 'Concentration and Focus', 'Organisation and Time management', 'Impulsivity and Hyperactivity', 'Processing and Memory', 'Communication and Social interaction', 'Routine, Structure, and Change', 'Movement and Co-ordination', 'Writing', 'Reading', 'Numbers and Mathematics', 'Auditory processing', 'Visual processing', 'Sensory sensitivity', 'Self-regulation, Managing Emotions, Confidence, and Self-esteem' ];
                 const formats = [ 'Website', 'App', 'Hybrid system', 'Equipment', 'Software', 'Browser Extension', 'Feature' ];
@@ -222,8 +268,8 @@
                         const isHidden = initialLimit && index >= initialLimit;
                         return `
                             <label class="flex items-center space-x-3 cursor-pointer ${isHidden ? 'hidden' : ''}" data-filter-item>
-                                <input type="checkbox" value="${item}" data-group="${groupName}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="text-sm text-gray-700">${item}</span>
+                                <input type="checkbox" value="${item}" data-group="${groupName}" class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 bg-gray-100 dark:bg-gray-700 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
+                                <span class="text-sm text-gray-700 dark:text-gray-300">${item}</span>
                             </label>
                         `;
                     }).join('');
@@ -231,7 +277,7 @@
                     if (initialLimit && items.length > initialLimit) {
                         const showMoreButton = document.createElement('button');
                         showMoreButton.type = 'button';
-                        showMoreButton.className = 'text-sm text-blue-600 hover:underline mt-2';
+                        showMoreButton.className = 'text-sm text-blue-600 dark:text-blue-400 hover:underline mt-2';
                         showMoreButton.textContent = `Show all ${items.length}`;
                         showMoreButton.dataset.action = 'toggle-filters';
                         showMoreButton.dataset.target = container.id;
@@ -241,25 +287,15 @@
                 
                 createFilterGroup(areasOfSupportFilters, areas, 'Areas of support', 4);
                 createFilterGroup(formatFilters, formats, 'Format', 4);
-                createFilterGroup(priceFilters, prices, 'Price', null); // No limit for price
+                createFilterGroup(priceFilters, prices, 'Price', null);
             }
 
-            /**
-             * Filters and displays the resources based on active filters and search term.
-             */
             function renderResults() {
                 let filteredData = database.filter(item => {
-                    // Filter logic
                     const areaMatch = activeFilters['Areas of support'].length === 0 || (Array.isArray(item['Areas of support']) && activeFilters['Areas of support'].every(value => item['Areas of support'].includes(value)));
                     const formatMatch = activeFilters['Format'].length === 0 || (Array.isArray(item['Format']) && activeFilters['Format'].every(value => item['Format'].includes(value)));
                     const priceMatch = activeFilters['Price'].length === 0 || (Array.isArray(item['Price']) && activeFilters['Price'].some(value => item['Price'].includes(value)));
-                    
-                    // Search logic
-                    const searchMatch = !activeSearchTerm ||
-                                      (item.Name && item.Name.toLowerCase().includes(activeSearchTerm)) ||
-                                      (item.Summary && item.Summary.toLowerCase().includes(activeSearchTerm)) ||
-                                      (item['Further info / notes'] && item['Further info / notes'].toLowerCase().includes(activeSearchTerm));
-                    
+                    const searchMatch = !activeSearchTerm || (item.Name && item.Name.toLowerCase().includes(activeSearchTerm)) || (item.Summary && item.Summary.toLowerCase().includes(activeSearchTerm)) || (item['Further info / notes'] && item['Further info / notes'].toLowerCase().includes(activeSearchTerm));
                     return areaMatch && formatMatch && priceMatch && searchMatch;
                 });
 
@@ -269,12 +305,12 @@
 
                 filteredData.forEach(item => {
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col cursor-pointer';
-                    const createBadge = (text, color) => `<span class="inline-block bg-${color}-100 text-${color}-800 text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${text}</span>`;
+                    card.className = 'bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg dark:hover:shadow-blue-900/20 transition-all duration-300 flex flex-col cursor-pointer';
+                    const createBadge = (text, color) => `<span class="inline-block bg-${color}-100 text-${color}-800 dark:bg-${color}-900 dark:text-${color}-300 text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${text}</span>`;
                     card.innerHTML = `
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">${item.Name}</h3>
-                            <p class="text-gray-600 line-clamp-2 mb-4">${item.Summary}</p>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">${item.Name}</h3>
+                            <p class="text-gray-600 dark:text-gray-400 line-clamp-2 mb-4">${item.Summary}</p>
                         </div>
                         <div class="p-6 pt-0">
                             <div>
@@ -289,9 +325,6 @@
                 });
             }
 
-            /**
-             * Displays the modal with detailed information about a selected resource.
-             */
             function showModal(item) {
                 modalTitle.textContent = item.Name;
                 const detailSection = (title, content) => {
@@ -300,8 +333,8 @@
                     const listClass = Array.isArray(content) ? 'list-disc list-inside' : '';
                     return `
                         <div>
-                            <h4 class="font-semibold text-gray-700">${title}</h4>
-                            <div class="text-gray-600 mt-1 ${listClass}">${contentHtml}</div>
+                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">${title}</h4>
+                            <div class="text-gray-600 dark:text-gray-400 mt-1 ${listClass}">${contentHtml}</div>
                         </div>
                     `;
                 };
@@ -309,7 +342,7 @@
                     ${detailSection('Summary', item.Summary)}
                     ${detailSection('Further info / notes', item['Further info / notes'])}
                     <div>
-                        <a href="${item.Link}" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-300">
+                        <a href="${item.Link}" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
                             Visit Website
                         </a>
                     </div>
@@ -318,17 +351,11 @@
                 document.body.style.overflow = 'hidden';
             }
 
-            /**
-             * Hides the modal.
-             */
             function hideModal() {
                 modalContainer.classList.add('hidden');
                 document.body.style.overflow = '';
             }
             
-            /**
-             * Handles changes in the filter form checkboxes.
-             */
             function handleFilterChange(e) {
                 if (e.target.type === 'checkbox') {
                     const group = e.target.dataset.group;
@@ -343,9 +370,6 @@
                 }
             }
 
-            /**
-             * Fetches data and initializes the application.
-             */
             async function initializeApp() {
                 try {
                     const response = await fetch('database.json');
@@ -361,10 +385,11 @@
                 }
             }
 
-            // --- Initial Setup ---
+            // --- Initial Setup & Event Listeners ---
+            updateThemeIcons();
             initializeApp();
 
-            // --- Event Listeners ---
+            themeToggleButton.addEventListener('click', handleThemeToggle);
             filterForm.addEventListener('input', handleFilterChange);
             
             searchBar.addEventListener('input', () => {
@@ -380,9 +405,7 @@
                     const isShowingAll = e.target.textContent.startsWith('Show less');
                     
                     if (isShowingAll) {
-                        allItems.forEach((item, index) => {
-                            if (index >= 4) item.classList.add('hidden');
-                        });
+                        allItems.forEach((item, index) => { if (index >= 4) item.classList.add('hidden'); });
                         e.target.textContent = `Show all ${allItems.length}`;
                     } else {
                         allItems.forEach(item => item.classList.remove('hidden'));
