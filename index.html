@@ -1,87 +1,103 @@
 <!DOCTYPE html>
 <html lang="en" class="">
 <head>
+    <!-- Meta tags for character set and responsive viewport -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Brains Welcome</title>
-    <!-- Tailwind CSS -->
+    
+    <!-- Tailwind CSS: A utility-first CSS framework for rapid UI development -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
+    
+    <!-- Google Fonts: Using the 'Inter' font for a clean, modern look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Custom Styles -->
+    
+    <!-- Custom Styles: Contains specific styles for theming, animations, and layout -->
     <style>
-        /* Base styles */
+        /* Base styles for the body element */
         body {
-            font-family: 'Inter', sans-serif;
-            @apply bg-slate-100 text-slate-800 transition-colors duration-300;
+            font-family: 'Inter', sans-serif; /* Sets the default font */
+            @apply bg-slate-100 text-slate-800 transition-colors duration-300; /* Light mode background and text colors with a smooth transition */
         }
         
         /* --- Dark Mode Theme --- */
-        .dark body { @apply bg-slate-900 text-slate-200; }
-        .dark .themed-bg { @apply bg-slate-800; }
-        .dark .themed-bg-secondary { @apply bg-slate-900/50; }
-        .dark .themed-text-primary { @apply text-slate-100; }
-        .dark .themed-text-secondary { @apply text-slate-300; }
-        .dark .themed-text-muted { @apply text-slate-400; }
-        .dark .themed-shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3); }
-        .dark .themed-shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3); }
-        .dark .themed-border { @apply border-slate-700; }
-        .dark .themed-bg-input { @apply bg-slate-700 text-white placeholder-slate-400; }
-        .dark .themed-bg-button { @apply bg-slate-700; }
-        .dark .themed-bg-button-hover:hover { @apply bg-slate-600; }
-        .dark #modal-overlay { background-color: rgba(0, 0, 0, 0.75); }
-        .dark .badge-blue { @apply bg-blue-900/60 text-blue-200; }
+        /* These styles are applied when the <html> element has the 'dark' class */
+        .dark body { @apply bg-slate-900 text-slate-200; } /* Dark mode background and text */
+        .dark .themed-bg { @apply bg-slate-800; } /* Primary background for elements like headers and modals */
+        .dark .themed-bg-secondary { @apply bg-slate-900/50; } /* Secondary background for description sections */
+        .dark .themed-text-primary { @apply text-slate-100; } /* Primary text color */
+        .dark .themed-text-secondary { @apply text-slate-300; } /* Secondary text color */
+        .dark .themed-text-muted { @apply text-slate-400; } /* Muted text for placeholders, etc. */
+        .dark .themed-shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3); } /* Custom shadow for dark mode */
+        .dark .themed-shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3); } /* Custom medium shadow */
+        .dark .themed-border { @apply border-slate-700; } /* Border color */
+        .dark .themed-bg-input { @apply bg-slate-700 text-white placeholder-slate-400; } /* Input field styles */
+        .dark .themed-bg-button { @apply bg-slate-700; } /* Button background */
+        .dark .themed-bg-button-hover:hover { @apply bg-slate-600; } /* Button hover background */
+        .dark #modal-overlay { background-color: rgba(0, 0, 0, 0.75); } /* Modal background overlay */
+        .dark .badge-blue { @apply bg-blue-900/60 text-blue-200; } /* Badge colors */
         .dark .badge-green { @apply bg-green-900/60 text-green-200; }
         .dark .badge-purple { @apply bg-purple-900/60 text-purple-200; }
 
         /* --- Accessibility --- */
+        /* Defines a clear focus outline for users navigating with a keyboard */
         :focus-visible {
             @apply outline-offset-2 rounded-md outline-2 outline-blue-500;
         }
         
         /* --- Animations --- */
+        /* Keyframe animation for cards sliding in from the bottom */
         @keyframes slideInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Keyframe animation for the modal popping into view */
         @keyframes popIn {
             0% { opacity: 0; transform: scale(0.8); }
             80% { opacity: 1; transform: scale(1.05); }
             100% { opacity: 1; transform: scale(1); }
         }
 
+        /* Hides the modal container when not active */
         #info-modal-container.hidden { @apply pointer-events-none; }
+        /* Smooth transition for the modal container and its overlay */
         #info-modal-container, #modal-overlay { transition: opacity 0.3s ease-in-out; }
         #info-modal-container.hidden #modal-overlay { @apply opacity-0; }
         
+        /* Applies the popIn animation to the modal panel */
         #info-modal {
             animation: popIn 0.4s ease-out forwards;
         }
 
+        /* Styles for the resource cards */
         .resource-card {
-            transform-style: preserve-3d;
-            transition: transform 0.5s, box-shadow 0.3s;
-            animation: slideInUp 0.5s ease-out forwards;
-            opacity: 0; /* Start hidden for animation */
+            transform-style: preserve-3d; /* Allows for 3D transformations */
+            transition: transform 0.5s, box-shadow 0.3s; /* Smooth transitions for hover effects */
+            animation: slideInUp 0.5s ease-out forwards; /* Applies the slide-in animation */
+            opacity: 0; /* Start hidden to allow the animation to fade it in */
         }
+        /* 3D hover effect for resource cards */
         .resource-card:hover {
-            transform: perspective(1000px) rotateY(5deg) scale(1.05);
-            @apply shadow-2xl;
+            transform: perspective(1000px) rotateY(5deg) scale(1.05); /* Rotates and scales the card on hover */
+            @apply shadow-2xl; /* Adds a more prominent shadow on hover */
         }
         
+        /* Disables animations for users who prefer reduced motion */
         @media (prefers-reduced-motion: reduce) {
             * { transition: none !important; animation: none !important; }
         }
         
         /* --- Layout --- */
+        /* Makes the filter sidebar sticky and scrollable */
         .filter-sidebar {
             position: sticky;
-            top: 6rem;
-            height: calc(100vh - 8rem);
-            overflow-y: auto;
+            top: 6rem; /* Positions it below the header */
+            height: calc(100vh - 8rem); /* Sets height to fill the viewport */
+            overflow-y: auto; /* Enables vertical scrolling if content overflows */
         }
+        /* Utility class to clamp text to two lines */
         .line-clamp-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -92,17 +108,27 @@
 </head>
 <body class="text-gray-800">
 
-    <!-- Header -->
+    <!-- Header Section -->
     <header class="themed-bg themed-shadow-sm sticky top-0 z-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
+                <!-- Logo and Title -->
                 <a href="#" class="flex items-center space-x-2">
                     <svg class="h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
                     <span class="text-xl font-bold themed-text-primary hidden sm:inline">All Brains Welcome</span>
                 </a>
+                <!-- Search Bar and Theme Toggle -->
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <div class="relative"><input type="search" id="search-bar" placeholder="Search..." class="w-36 sm:w-64 pl-10 pr-4 py-2 themed-border themed-bg-input rounded-full text-sm focus:ring-blue-500 focus:border-blue-500"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="h-5 w-5 themed-text-muted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div></div>
-                    <button id="theme-toggle" type="button" class="p-2 rounded-full themed-text-muted themed-bg-button-hover"><svg id="theme-toggle-dark-icon" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg><svg id="theme-toggle-light-icon" class="h-5 w-5 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg></button>
+                    <div class="relative">
+                        <input type="search" id="search-bar" placeholder="Search..." class="w-36 sm:w-64 pl-10 pr-4 py-2 themed-border themed-bg-input rounded-full text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 themed-text-muted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                    </div>
+                    <button id="theme-toggle" type="button" class="p-2 rounded-full themed-text-muted themed-bg-button-hover">
+                        <svg id="theme-toggle-dark-icon" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="h-5 w-5 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -113,51 +139,117 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8"><h1 class="text-2xl font-bold themed-text-primary mb-2 text-center">Neurodiversity & Assistive Technology Resource Hub</h1><p class="text-center themed-text-secondary max-w-4xl mx-auto">Welcome! This hub helps you discover tools and strategies for neurodiversity. Use the filters to find resources for organization, focus, communication, and more. Click any card to learn more.</p></div>
     </section>
 
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
         <div class="lg:grid lg:grid-cols-4 lg:gap-8">
-            <aside class="lg:col-span-1 mb-8 lg:mb-0"><div class="filter-sidebar"><div class="p-6 rounded-lg themed-shadow-md" id="filters-container"><h2 class="text-xl font-semibold mb-4 themed-text-primary">Filters</h2><form id="filter-form"></form></div></div></aside>
-            <section class="lg:col-span-3"><div class="themed-bg p-4 rounded-lg themed-shadow-sm mb-4 flex items-center justify-between"><h2 id="results-count" class="text-lg font-medium themed-text-secondary">Loading...</h2></div><div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div><div id="no-results" class="hidden text-center py-16"><svg class="mx-auto h-12 w-12 themed-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg><h3 class="mt-2 text-lg font-medium themed-text-primary">No Results Found</h3><p class="mt-1 text-sm themed-text-muted">Try adjusting your search or filters.</p></div><div id="loading-indicator" class="text-center py-16"><svg class="animate-spin mx-auto h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-2 themed-text-muted">Loading data...</p></div></section>
+            <!-- Left column for filters -->
+            <aside class="lg:col-span-1 mb-8 lg:mb-0">
+                <div class="filter-sidebar">
+                    <div class="p-6 rounded-lg themed-shadow-md" id="filters-container">
+                        <h2 class="text-xl font-semibold mb-4 themed-text-primary">Filters</h2>
+                        <form id="filter-form"></form> <!-- Filter form content is generated by JavaScript -->
+                    </div>
+                </div>
+            </aside>
+            <!-- Right column for results -->
+            <section class="lg:col-span-3">
+                <div class="themed-bg p-4 rounded-lg themed-shadow-sm mb-4 flex items-center justify-between">
+                    <h2 id="results-count" class="text-lg font-medium themed-text-secondary">Loading...</h2>
+                </div>
+                <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div> <!-- Resource cards are inserted here by JavaScript -->
+                <div id="no-results" class="hidden text-center py-16"><svg class="mx-auto h-12 w-12 themed-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg><h3 class="mt-2 text-lg font-medium themed-text-primary">No Results Found</h3><p class="mt-1 text-sm themed-text-muted">Try adjusting your search or filters.</p></div>
+                <div id="loading-indicator" class="text-center py-16"><svg class="animate-spin mx-auto h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-2 themed-text-muted">Loading data...</p></div>
+            </section>
         </div>
     </main>
 
-    <!-- Details Modal -->
-    <div id="info-modal-container" class="fixed inset-0 z-40 hidden"><div id="modal-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-75"></div><div class="relative flex items-center justify-center min-h-screen p-4"><div id="info-modal" class="themed-bg rounded-lg shadow-xl w-full max-w-2xl"><div class="p-6 sm:p-8"><div class="flex items-start justify-between"><h3 id="modal-title" class="text-2xl font-bold themed-text-primary"></h3><button id="modal-close-button" type="button" class="p-1 rounded-full themed-text-muted themed-bg-button-hover"><span class="sr-only">Close</span><svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button></div><div id="modal-content" class="mt-4 space-y-4"></div></div></div></div></div>
+    <!-- Details Modal (Popup Window) -->
+    <div id="info-modal-container" class="fixed inset-0 z-40 hidden">
+        <div id="modal-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-75"></div>
+        <div class="relative flex items-center justify-center min-h-screen p-4">
+            <div id="info-modal" class="themed-bg rounded-lg shadow-xl w-full max-w-2xl">
+                <div class="p-6 sm:p-8">
+                    <div class="flex items-start justify-between">
+                        <h3 id="modal-title" class="text-2xl font-bold themed-text-primary"></h3>
+                        <button id="modal-close-button" type="button" class="p-1 rounded-full themed-text-muted themed-bg-button-hover"><span class="sr-only">Close</span><svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+                    </div>
+                    <div id="modal-content" class="mt-4 space-y-4"></div> <!-- Modal content is inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <!-- Link Status Notification -->
+    <!-- Link Status Notification (Toast) -->
     <div id="link-notification" class="fixed bottom-5 right-5 bg-slate-800 text-white py-3 px-5 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-500 z-50"><p></p></div>
 
     <script>
+    // This event listener ensures the JavaScript code runs only after the entire HTML document has been loaded.
     document.addEventListener('DOMContentLoaded', function () {
-        let database = [], activeFilters = { 'Areas of support': [], 'Format': [], 'Price': [] }, searchQuery = '';
-        const resultsGrid = document.getElementById('results-grid'), resultsCount = document.getElementById('results-count'), noResults = document.getElementById('no-results'), loadingIndicator = document.getElementById('loading-indicator'), filterForm = document.getElementById('filter-form'), searchBar = document.getElementById('search-bar'), modalContainer = document.getElementById('info-modal-container'), modalTitle = document.getElementById('modal-title'), modalContent = document.getElementById('modal-content'), modalCloseButton = document.getElementById('modal-close-button'), modalOverlay = document.getElementById('modal-overlay'), themeToggle = document.getElementById('theme-toggle'), linkNotification = document.getElementById('link-notification'), filtersContainer = document.getElementById('filters-container');
+        
+        // --- Global Variables & State Management ---
+        let database = []; // Will hold all resource data from database.json
+        let activeFilters = { 'Areas of support': [], 'Format': [], 'Price': [] }; // Tracks currently selected filters
+        let searchQuery = ''; // Stores the current text from the search bar
 
-        // Color palettes for cards and filters
+        // --- DOM Element Selectors ---
+        // Caching elements that are frequently accessed improves performance.
+        const resultsGrid = document.getElementById('results-grid');
+        const resultsCount = document.getElementById('results-count');
+        const noResults = document.getElementById('no-results');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const filterForm = document.getElementById('filter-form');
+        const searchBar = document.getElementById('search-bar');
+        const modalContainer = document.getElementById('info-modal-container');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const themeToggle = document.getElementById('theme-toggle');
+        const linkNotification = document.getElementById('link-notification');
+        const filtersContainer = document.getElementById('filters-container');
+
+        // --- Color Palettes ---
+        // Defines color schemes for resource cards and the filter area in both light and dark modes.
         const cardColors = { light: ['bg-white', 'bg-sky-50', 'bg-teal-50', 'bg-rose-50', 'bg-amber-50'], dark: ['bg-slate-800', 'bg-sky-900/40', 'bg-teal-900/40', 'bg-rose-900/40', 'bg-amber-900/40'] };
         const filterColors = { light: 'bg-indigo-50', dark: 'bg-indigo-900/20' };
 
+        /**
+         * Sets up the theme (dark/light mode) based on user's preference or system settings.
+         */
         const setupTheme = () => {
-            const darkIcon = document.getElementById('theme-toggle-dark-icon'), lightIcon = document.getElementById('theme-toggle-light-icon');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+            
+            // Function to apply the theme classes to the document
             const applyTheme = (isDark) => {
                 document.documentElement.classList.toggle('dark', isDark);
                 darkIcon.classList.toggle('hidden', !isDark);
                 lightIcon.classList.toggle('hidden', isDark);
+                // Apply specific color to the filters container based on the theme
                 filtersContainer.classList.remove(isDark ? filterColors.light : filterColors.dark);
                 filtersContainer.classList.add(isDark ? filterColors.dark : filterColors.light);
             };
+
+            // Check localStorage first, then system preference
             const isDark = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
             applyTheme(isDark);
+
+            // Add click listener to the toggle button
             themeToggle.addEventListener('click', () => {
-                const newTheme = !document.documentElement.classList.contains('dark');
-                localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-                applyTheme(newTheme);
+                const newThemeIsDark = !document.documentElement.classList.contains('dark');
+                localStorage.setItem('theme', newThemeIsDark ? 'dark' : 'light');
+                applyTheme(newThemeIsDark);
                 renderResults(); // Re-render to apply new card colors
             });
         };
 
+        /**
+         * Dynamically creates the filter checkboxes and "Show all" buttons.
+         */
         const createFilters = () => {
             const filterGroups = { 'Areas of support': { items: [ 'Concentration and Focus', 'Organisation and Time management', 'Impulsivity and Hyperactivity', 'Processing and Memory', 'Communication and Social interaction', 'Routine, Structure, and Change', 'Movement and Co-ordination', 'Writing', 'Reading', 'Numbers and Mathematics', 'Auditory processing', 'Visual processing', 'Sensory sensitivity', 'Self-regulation, Managing Emotions, Confidence, and Self-esteem' ], limit: 4 }, 'Format': { items: [ 'Website', 'App', 'Hybrid system', 'Equipment', 'Software', 'Browser Extension', 'Feature' ], limit: 4 }, 'Price': { items: [ 'Free', 'Paid', 'Free with Paid options' ], limit: null } };
             let formHTML = '';
+            // Loop through each filter group and create its HTML
             for (const groupName in filterGroups) {
                 const { items, limit } = filterGroups[groupName];
                 items.sort();
@@ -171,28 +263,33 @@
             filterForm.innerHTML = formHTML;
         };
         
+        /**
+         * Filters the database based on search and active filters, then renders the results.
+         */
         const renderResults = () => {
             const isDark = document.documentElement.classList.contains('dark');
             const currentCardColors = isDark ? cardColors.dark : cardColors.light;
-            const anyFilterActive = Object.values(activeFilters).some(arr => arr.length > 0);
-            const query = searchQuery.toLowerCase();
+            
+            // Filter logic: combines search and checkbox filters
             const filteredData = database.filter(item => {
-                const searchMatch = query === '' || item.Name.toLowerCase().includes(query) || item.Summary.toLowerCase().includes(query);
+                const searchMatch = searchQuery === '' || item.Name.toLowerCase().includes(searchQuery) || item.Summary.toLowerCase().includes(searchQuery);
                 const areaMatch = activeFilters['Areas of support'].length === 0 || (Array.isArray(item['Areas of support']) && activeFilters['Areas of support'].every(value => item['Areas of support'].includes(value)));
                 const formatMatch = activeFilters['Format'].length === 0 || (Array.isArray(item['Format']) && activeFilters['Format'].every(value => item['Format'].includes(value)));
                 const priceMatch = activeFilters['Price'].length === 0 || (Array.isArray(item['Price']) && activeFilters['Price'].some(value => item['Price'].includes(value)));
                 return searchMatch && areaMatch && formatMatch && priceMatch;
             });
 
+            // Clear previous results and update count
             resultsGrid.innerHTML = '';
             resultsCount.textContent = `${filteredData.length} Result${filteredData.length !== 1 ? 's' : ''}`;
             noResults.classList.toggle('hidden', filteredData.length > 0);
 
+            // Create and append a card for each result
             filteredData.forEach((item, index) => {
                 const card = document.createElement('div');
                 const colorClass = currentCardColors[index % currentCardColors.length];
                 card.className = `resource-card rounded-lg themed-shadow-md flex flex-col cursor-pointer ${colorClass}`;
-                card.style.animationDelay = `${index * 50}ms`;
+                card.style.animationDelay = `${index * 50}ms`; // Staggered animation
                 const createBadge = (text, type) => `<span class="inline-block badge-${type} text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${text}</span>`;
                 card.innerHTML = `<div class="p-6 flex-grow"><h3 class="text-xl font-bold themed-text-primary mb-2">${item.Name}</h3><p class="themed-text-secondary line-clamp-2 mb-4">${item.Summary}</p></div><div class="p-6 pt-0"><div>${item['Areas of support'].slice(0, 3).map(area => createBadge(area, 'blue')).join('')}${item.Format.map(format => createBadge(format, 'green')).join('')}${item.Price.map(price => createBadge(price, 'purple')).join('')}</div></div>`;
                 card.addEventListener('click', () => showModal(item));
@@ -200,6 +297,9 @@
             });
         };
 
+        /**
+         * Populates and displays the modal with details for a specific resource.
+         */
         const showModal = (item) => {
             modalTitle.textContent = item.Name;
             const detailSection = (title, content) => {
@@ -209,23 +309,34 @@
             };
             modalContent.innerHTML = `${detailSection('Summary', item.Summary)}${detailSection('Further info / notes', item['Further info / notes'])}<button data-link="${item.Link}" class="link-checker-button inline-block mt-4 px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-300">Visit Website</button>`;
             modalContainer.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         };
         
+        /**
+         * Hides the modal.
+         */
         const hideModal = () => {
             modalContainer.classList.add('hidden');
-            document.body.style.overflow = '';
+            document.body.style.overflow = ''; // Re-enable background scrolling
         };
         
+        /**
+         * Shows a notification toast at the bottom-right of the screen.
+         */
         const showNotification = (message, duration = 3000) => {
             linkNotification.querySelector('p').textContent = message;
             linkNotification.classList.remove('opacity-0', 'translate-y-20');
             setTimeout(() => linkNotification.classList.add('opacity-0', 'translate-y-20'), duration);
         };
 
+        /**
+         * "Checks" a link by attempting a fetch, shows a notification, then opens the link.
+         */
         const checkLink = async (url) => {
             showNotification('Checking link...', 2000);
             try {
+                // 'no-cors' mode prevents errors but returns an opaque response.
+                // It's a simple way to check if a domain is likely reachable.
                 await fetch(url, { mode: 'no-cors' });
                 showNotification('Link seems active! Redirecting...', 2000);
             } catch (error) {
@@ -234,27 +345,35 @@
             setTimeout(() => window.open(url, '_blank', 'noopener,noreferrer'), 500);
         };
 
+        /**
+         * Main function to initialize the application.
+         */
         const initializeApp = async () => {
             try {
+                // Fetch the resource data from the JSON file.
                 const response = await fetch('database.json');
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 database = await response.json();
+                // Once data is loaded, create the filters and render the initial results.
                 createFilters();
                 renderResults();
             } catch (error) {
                 console.error("Failed to initialize:", error);
                 resultsGrid.innerHTML = `<p class="text-red-500">An error occurred while loading data.</p>`;
             } finally {
+                // Hide the loading spinner regardless of success or failure.
                 loadingIndicator.classList.add('hidden');
             }
         };
 
-        setupTheme();
-        initializeApp();
+        // --- Initial Setup & Event Listeners ---
+        setupTheme(); // Set up the dark/light mode
+        initializeApp(); // Fetch data and build the page
 
+        // Handles checkbox changes in the filter form
         filterForm.addEventListener('input', e => {
             if (e.target.type === 'checkbox') {
-                const { group, value } = e.target.dataset;
+                const { group } = e.target.dataset;
                 if (e.target.checked) {
                     if (!activeFilters[group].includes(e.target.value)) activeFilters[group].push(e.target.value);
                 } else {
@@ -264,6 +383,7 @@
             }
         });
 
+        // Handles clicks on "Show all" / "Show less" buttons
         filterForm.addEventListener('click', e => {
             if (e.target.dataset.action === 'toggle-filters') {
                 const container = e.target.previousElementSibling;
@@ -273,6 +393,7 @@
             }
         });
 
+        // Handles the form reset button
         filterForm.addEventListener('reset', () => {
             activeFilters = { 'Areas of support': [], 'Format': [], 'Price': [] };
             searchQuery = '';
@@ -280,18 +401,22 @@
             renderResults();
         });
         
+        // Handles search bar input with a debounce to prevent excessive re-rendering
         let searchTimeout;
         searchBar.addEventListener('input', () => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 searchQuery = searchBar.value;
                 renderResults();
-            }, 300);
+            }, 300); // Wait 300ms after user stops typing
         });
 
+        // Event listeners for closing the modal
         modalCloseButton.addEventListener('click', hideModal);
         modalOverlay.addEventListener('click', hideModal);
         document.addEventListener('keydown', e => e.key === 'Escape' && !modalContainer.classList.contains('hidden') && hideModal());
+        
+        // Event listener for the "Visit Website" button inside the modal
         modalContainer.addEventListener('click', e => e.target.classList.contains('link-checker-button') && checkLink(e.target.dataset.link));
     });
     </script>
