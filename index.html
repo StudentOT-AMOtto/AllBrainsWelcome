@@ -4,53 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Brains Welcome</title>
-    <!-- Tailwind CSS for styling -->
+    <!-- Tailwind CSS for styling - loaded from CDN for ease of use with GitHub Pages -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Inter - for consistent typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Custom Stylesheet -->
+    <!-- Custom Stylesheet - for additional, specific styling -->
     <style>
+        /* Define custom color palette based on the provided image */
+        :root {
+            --bg-main: #fdfaf6;
+            --surface-light-blue: #e0eaf3;
+            --surface-lavender: #e2ddef;
+            --surface-mustard: #d9c8a4;
+            --surface-orange: #f8b49b;
+            --surface-dark-orange: #e9a385;
+            --text-dark: #3d3d3d;
+            --text-medium: #5a5a5a;
+            --accent-color: #e57373; /* A soft reddish-orange for focus/accent */
+        }
+
         /* Base styles for the entire body */
         body {
             font-family: 'Inter', sans-serif;
-            /* A warm, off-white background color inspired by the image */
-            background-color: #FFFBF5; 
+            background-color: var(--bg-main);
+            color: var(--text-dark);
         }
 
-        /* Custom color variables for Tailwind CSS */
-        /* This allows us to use the specific colors from the image within Tailwind's class system */
-        :root {
-            --color-brand-orange: #F07643;
-            --color-brand-gold: #C4A34A;
-            --color-brand-purple: #D9C8E5;
-            --color-brand-dark-purple: #585076;
-        }
-
-        /* Extending Tailwind with our custom colors */
-        .bg-brand-orange { background-color: var(--color-brand-orange); }
-        .text-brand-orange { color: var(--color-brand-orange); }
-        .ring-brand-orange { ring-color: var(--color-brand-orange); }
-        .hover\:bg-brand-orange-dark:hover { background-color: #E86A33; } /* A slightly darker orange for hover states */
-
-        .text-brand-dark-purple { color: var(--color-brand-dark-purple); }
-        
-        .border-brand-purple { border-color: var(--color-brand-purple); }
-        
         /* Accessibility: Focus styles for keyboard navigation */
         :focus-visible {
-            outline: 3px solid var(--color-brand-orange);
+            outline: 3px solid var(--accent-color);
             outline-offset: 2px;
             border-radius: 6px;
         }
-        
-        /* Class to truncate text to 2 lines */
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+
+        /* Customizing form elements to match the new theme */
+        input[type="checkbox"] {
+            color: var(--accent-color);
+            border-color: #c7c7c7;
+        }
+        input[type="checkbox"]:checked {
+            background-color: var(--accent-color);
+        }
+        input[type="checkbox"]:focus {
+            ring-color: var(--accent-color);
         }
 
         /* Animation for the modal transition */
@@ -71,6 +69,7 @@
             top: 6rem; /* Adjust based on header height */
             height: calc(100vh - 8rem); /* Full height minus header and some padding */
             overflow-y: auto;
+            background-color: var(--surface-lavender);
         }
 
         /* Reduced motion accessibility */
@@ -79,19 +78,27 @@
                 transition: none;
             }
         }
+
+        /* Class to truncate text to 2 lines */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="text-gray-800" style="color: var(--text-dark);">
 
-    <!-- Header Section: Fixed at the top with a subtle shadow for depth -->
-    <header class="bg-white/70 backdrop-blur-lg shadow-sm sticky top-0 z-20">
+    <!-- Header Section: Fixed at the top with a subtle shadow for depth (Style Unchanged as Requested) -->
+    <header class="bg-white shadow-sm sticky top-0 z-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-center h-16">
                 <!-- Logo / Title -->
                 <div class="flex-shrink-0">
                     <a href="#" class="flex items-center space-x-2">
-                        <!-- Updated SVG Icon color to match the new theme -->
-                        <svg class="h-8 w-8 text-brand-dark-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <!-- SVG Icon for the logo -->
+                        <svg class="h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                         </svg>
                         <span class="text-xl font-bold text-gray-900">All Brains Welcome</span>
@@ -101,8 +108,8 @@
         </div>
     </header>
     
-    <!-- Description Section -->
-    <section class="bg-amber-50 border-b border-amber-100">
+    <!-- Description Section (Style Unchanged as Requested) -->
+    <section class="bg-blue-50 border-b border-blue-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <h1 class="text-2xl font-bold text-gray-900 mb-2 text-center">Neurodiversity & Assistive Technology Resource Hub</h1>
             <p class="text-center text-gray-700 max-w-4xl mx-auto">
@@ -111,101 +118,103 @@
         </div>
     </section>
 
-    <!-- Main Content Area -->
+    <!-- Main Content Area: Divided into a sidebar for filters and a main section for results -->
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
         <div class="lg:grid lg:grid-cols-4 lg:gap-8">
             
-            <!-- Filters Section (Left Sidebar) -->
+            <!-- Filters Section (Left Sidebar): Styled with the new lavender color -->
             <aside class="lg:col-span-1 mb-8 lg:mb-0">
-                <div class="bg-white p-6 rounded-lg shadow-sm filter-sidebar">
-                    <h2 class="text-xl font-semibold mb-4 text-gray-900">Filters</h2>
+                <div class="p-6 rounded-lg shadow-sm filter-sidebar">
+                    <h2 class="text-xl font-semibold mb-4" style="color: var(--text-dark);">Filters</h2>
                     <form id="filter-form">
                         <!-- Areas of Support Filter Group -->
                         <div class="mb-6">
-                            <h3 class="font-semibold mb-3 text-gray-700">Areas of Support</h3>
+                            <h3 class="font-semibold mb-3" style="color: var(--text-medium);">Areas of Support</h3>
                             <div id="areas-of-support-filters" class="space-y-2">
-                                <!-- Dynamic Checkboxes -->
+                                <!-- Checkboxes will be dynamically inserted here -->
                             </div>
                         </div>
                         <!-- Format Filter Group -->
                         <div class="mb-6">
-                            <h3 class="font-semibold mb-3 text-gray-700">Format</h3>
+                            <h3 class="font-semibold mb-3" style="color: var(--text-medium);">Format</h3>
                             <div id="format-filters" class="space-y-2">
-                                <!-- Dynamic Checkboxes -->
+                                <!-- Checkboxes will be dynamically inserted here -->
                             </div>
                         </div>
                         <!-- Price Filter Group -->
                          <div class="mb-6">
-                            <h3 class="font-semibold mb-3 text-gray-700">Price</h3>
+                            <h3 class="font-semibold mb-3" style="color: var(--text-medium);">Price</h3>
                             <div id="price-filters" class="space-y-2">
-                                <!-- Dynamic Checkboxes -->
+                                <!-- Checkboxes will be dynamically inserted here -->
                             </div>
                         </div>
-                        <!-- Reset Filters Button -->
-                        <button type="reset" id="reset-filters" class="w-full px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 transition-colors">
+                        <!-- Reset Filters Button: Styled to match the new theme -->
+                        <button type="reset" id="reset-filters" class="w-full px-4 py-2 text-white font-medium rounded-md hover:opacity-90 transition-opacity" style="background-color: var(--accent-color);">
                             Reset Filters
                         </button>
                     </form>
                 </div>
             </aside>
 
-            <!-- Results Section (Main Area) -->
+            <!-- Results Section (Main Area): Displays filtered resources -->
             <section class="lg:col-span-3">
-                <div class="bg-white/0 p-4 rounded-lg mb-4 flex items-center justify-between">
-                    <h2 id="results-count" class="text-lg font-medium text-gray-700">Loading results...</h2>
+                <div class="bg-white p-4 rounded-lg shadow-sm mb-4 flex items-center justify-between" style="background-color: var(--surface-light-blue);">
+                    <h2 id="results-count" class="text-lg font-medium" style="color: var(--text-medium);">Loading results...</h2>
                 </div>
                 <!-- Grid for displaying resource cards -->
                 <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-                    <!-- Dynamic Resource cards -->
+                    <!-- Resource cards will be dynamically inserted here -->
                 </div>
-                <!-- No results message -->
+                <!-- Message displayed when no results are found -->
                  <div id="no-results" class="hidden text-center py-16">
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
-                    <h3 class="mt-2 text-lg font-medium text-gray-900">No Results Found</h3>
-                    <p class="mt-1 text-sm text-gray-500">Try adjusting your filters to find what you're looking for.</p>
+                    <h3 class="mt-2 text-lg font-medium" style="color: var(--text-dark);">No Results Found</h3>
+                    <p class="mt-1 text-sm" style="color: var(--text-medium);">Try adjusting your filters to find what you're looking for.</p>
                   </div>
                 <!-- Loading Indicator -->
                 <div id="loading-indicator" class="text-center py-16">
-                    <svg class="animate-spin mx-auto h-8 w-8 text-brand-orange" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg class="animate-spin mx-auto h-8 w-8" style="color: var(--accent-color);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <p class="mt-2 text-gray-600">Loading data...</p>
+                    <p class="mt-2" style="color: var(--text-medium);">Loading data...</p>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Details Modal -->
+    <!-- Details Modal: Styled to match the new theme -->
     <div id="info-modal-container" class="fixed inset-0 z-40 hidden" role="dialog" aria-modal="true">
         <!-- Overlay -->
         <div id="modal-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-75"></div>
         <!-- Modal Panel -->
         <div class="relative flex items-center justify-center min-h-screen p-4">
-            <div id="info-modal" class="bg-white rounded-lg shadow-xl w-full max-w-2xl transform transition-all">
+            <div id="info-modal" class="rounded-lg shadow-xl w-full max-w-2xl transform transition-all" style="background-color: var(--bg-main);">
                 <div class="p-6 sm:p-8">
                     <div class="flex items-start justify-between">
-                        <h3 id="modal-title" class="text-2xl font-bold text-gray-900"></h3>
-                        <!-- Close Button -->
+                        <h3 id="modal-title" class="text-2xl font-bold" style="color: var(--text-dark);"></h3>
+                        <!-- Close Button for the modal -->
                         <button id="modal-close-button" type="button" class="p-1 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-600">
                             <span class="sr-only">Close</span>
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                         </button>
                     </div>
                     <div id="modal-content" class="mt-4 space-y-4">
-                        <!-- Dynamic modal content -->
+                        <!-- Detailed content will be injected here -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Custom JavaScript -->
+    <!-- Custom JavaScript: Contains logic for data fetching, filtering, and interactions -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
+            // Global variable to hold the database data.
             let database = [];
             
+            // --- Element Selectors ---
             const resultsGrid = document.getElementById('results-grid');
             const resultsCount = document.getElementById('results-count');
             const noResults = document.getElementById('no-results');
@@ -221,12 +230,21 @@
             const modalOverlay = document.getElementById('modal-overlay');
             const resetButton = document.getElementById('reset-filters');
 
+            // --- State Management ---
             let activeFilters = {
                 'Areas of support': [],
                 'Format': [],
                 'Price': []
             };
+            
+            // --- New Color Palette for Cards ---
+            const cardColors = ['var(--surface-light-blue)', 'var(--surface-mustard)', 'var(--surface-orange)', 'var(--surface-dark-orange)'];
 
+            // --- Functions ---
+
+            /**
+             * Creates and populates the filter checkboxes.
+             */
             function createFilters() {
                 const areas = [ 'Concentration and Focus', 'Organisation and Time management', 'Impulsivity and Hyperactivity', 'Processing and Memory', 'Communication and Social interaction', 'Routine, Structure, and Change', 'Movement and Co-ordination', 'Writing', 'Reading', 'Numbers and Mathematics', 'Auditory processing', 'Visual processing', 'Sensory sensitivity', 'Self-regulation, Managing Emotions, Confidence, and Self-esteem' ];
                 const formats = [ 'Website', 'App', 'Hybrid system', 'Equipment', 'Software', 'Browser Extension', 'Feature' ];
@@ -237,8 +255,8 @@
                         const isHidden = initialLimit && index >= initialLimit;
                         return `
                             <label class="flex items-center space-x-3 cursor-pointer ${isHidden ? 'hidden' : ''}" data-filter-item>
-                                <input type="checkbox" value="${item}" data-group="${groupName}" class="h-4 w-4 rounded border-gray-300 text-brand-orange focus:ring-brand-orange">
-                                <span class="text-sm text-gray-700">${item}</span>
+                                <input type="checkbox" value="${item}" data-group="${groupName}" class="h-4 w-4 rounded border-gray-300 focus:ring-offset-0">
+                                <span class="text-sm" style="color: var(--text-medium);">${item}</span>
                             </label>
                         `;
                     }).join('');
@@ -246,7 +264,8 @@
                     if (initialLimit && items.length > initialLimit) {
                         const showMoreButton = document.createElement('button');
                         showMoreButton.type = 'button';
-                        showMoreButton.className = 'text-sm text-brand-orange hover:underline mt-2';
+                        showMoreButton.className = 'text-sm hover:underline mt-2';
+                        showMoreButton.style.color = 'var(--accent-color)';
                         showMoreButton.textContent = `Show all ${items.length}`;
                         showMoreButton.dataset.action = 'toggle-filters';
                         showMoreButton.dataset.target = container.id;
@@ -259,6 +278,9 @@
                 createFilterGroup(priceFilters, prices, 'Price', null);
             }
 
+            /**
+             * Filters and displays the resources based on the active filters.
+             */
             function renderResults() {
                 const anyFilterActive = Object.values(activeFilters).some(arr => arr.length > 0);
                 let filteredData;
@@ -278,21 +300,24 @@
                 resultsCount.textContent = `${filteredData.length} Result${filteredData.length !== 1 ? 's' : ''}`;
                 noResults.classList.toggle('hidden', filteredData.length > 0);
 
-                filteredData.forEach(item => {
+                filteredData.forEach((item, index) => {
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col cursor-pointer';
-                    // Updated badge colors to match the new theme
-                    const createBadge = (text, bgColor, textColor) => `<span class="inline-block ${bgColor} ${textColor} text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${text}</span>`;
+                    card.className = 'rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col cursor-pointer';
+                    // Cycle through the new color palette for card backgrounds
+                    card.style.backgroundColor = cardColors[index % cardColors.length];
+                    
+                    const createBadge = (text) => `<span class="inline-block bg-white bg-opacity-70 text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full" style="color: var(--text-dark);">${text}</span>`;
+                    
                     card.innerHTML = `
                         <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">${item.Name}</h3>
-                            <p class="text-gray-600 line-clamp-2 mb-4">${item.Summary}</p>
+                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-dark);">${item.Name}</h3>
+                            <p class="line-clamp-2 mb-4" style="color: var(--text-medium);">${item.Summary}</p>
                         </div>
                         <div class="p-6 pt-0">
                             <div>
-                                ${item['Areas of support'].slice(0, 3).map(area => createBadge(area, 'bg-orange-100', 'text-orange-800')).join('')}
-                                ${item.Format.map(format => createBadge(format, 'bg-amber-100', 'text-amber-800')).join('')}
-                                ${item.Price.map(price => createBadge(price, 'bg-purple-100', 'text-purple-800')).join('')}
+                                ${item['Areas of support'].slice(0, 3).map(area => createBadge(area)).join('')}
+                                ${item.Format.map(format => createBadge(format)).join('')}
+                                ${item.Price.map(price => createBadge(price)).join('')}
                             </div>
                         </div>
                     `;
@@ -301,6 +326,9 @@
                 });
             }
 
+            /**
+             * Displays the modal with detailed information about a selected resource.
+             */
             function showModal(item) {
                 modalTitle.textContent = item.Name;
                 const detailSection = (title, content) => {
@@ -309,8 +337,8 @@
                     const listClass = Array.isArray(content) ? 'list-disc list-inside' : '';
                     return `
                         <div>
-                            <h4 class="font-semibold text-gray-700">${title}</h4>
-                            <div class="text-gray-600 mt-1 ${listClass}">${contentHtml}</div>
+                            <h4 class="font-semibold" style="color: var(--text-dark);">${title}</h4>
+                            <div class="mt-1 ${listClass}" style="color: var(--text-medium);">${contentHtml}</div>
                         </div>
                     `;
                 };
@@ -318,7 +346,7 @@
                     ${detailSection('Summary', item.Summary)}
                     ${detailSection('Further info / notes', item['Further info / notes'])}
                     <div>
-                        <a href="${item.Link}" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 px-5 py-2.5 bg-brand-orange text-white font-medium rounded-lg hover:bg-brand-orange-dark transition-colors focus:ring-4 focus:ring-orange-300">
+                        <a href="${item.Link}" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 px-5 py-2.5 text-white font-medium rounded-lg hover:opacity-90 transition-opacity" style="background-color: var(--accent-color);">
                             Visit Website
                         </a>
                     </div>
@@ -327,11 +355,17 @@
                 document.body.style.overflow = 'hidden';
             }
 
+            /**
+             * Hides the modal.
+             */
             function hideModal() {
                 modalContainer.classList.add('hidden');
                 document.body.style.overflow = '';
             }
             
+            /**
+             * Handles changes in the filter form checkboxes.
+             */
             function handleFilterChange(e) {
                 if (e.target.type === 'checkbox') {
                     const group = e.target.dataset.group;
@@ -346,6 +380,9 @@
                 }
             }
 
+            /**
+             * Fetches data and initializes the application.
+             */
             async function initializeApp() {
                 try {
                     const response = await fetch('database.json');
@@ -361,8 +398,10 @@
                 }
             }
 
+            // --- Initial Setup ---
             initializeApp();
 
+            // --- Event Listeners ---
             filterForm.addEventListener('input', handleFilterChange);
             
             filterForm.addEventListener('click', (e) => {
