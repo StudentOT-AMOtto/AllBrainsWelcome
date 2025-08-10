@@ -27,15 +27,15 @@
         }
 
         /* Animation for the modal transition */
-        /* Defines a smooth transition effect for opacity and transform properties of the modal */
+        /* Defines a fun, springy transition effect for the modal */
         #info-modal {
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         /* State when the modal container is hidden */
-        /* When the parent container is hidden, the modal itself scales down and fades out */
+        /* When the parent container is hidden, the modal itself scales down, rotates slightly, and fades out */
         #info-modal-container.hidden #info-modal {
-            transform: scale(0.95); /* Shrinks the modal slightly */
+            transform: scale(0.9) rotate(-5deg); /* Shrinks and tilts the modal */
             opacity: 0; /* Makes it completely transparent */
             pointer-events: none; /* Prevents interaction with the hidden modal */
         }
@@ -52,8 +52,12 @@
         /* Disables animations for users who prefer reduced motion, improving accessibility */
         @media (prefers-reduced-motion: reduce) {
             #info-modal {
-                transition: none; /* Removes all transitions */
+                transition: opacity 0.3s ease-in-out; /* Fallback to a simple fade */
+                transform: none;
             }
+             #info-modal-container.hidden #info-modal {
+                transform: scale(0.95);
+             }
         }
 
         /* Class to truncate text to 2 lines */
