@@ -39,6 +39,14 @@
             opacity: 0; /* Makes it completely transparent */
             pointer-events: none; /* Prevents interaction with the hidden modal */
         }
+        
+        /* Independent scrolling for filters */
+        .filter-sidebar {
+            position: sticky;
+            top: 6rem; /* Adjust based on header height */
+            height: calc(100vh - 8rem); /* Full height minus header and some padding */
+            overflow-y: auto;
+        }
 
         /* Reduced motion accessibility */
         /* Disables animations for users who prefer reduced motion, improving accessibility */
@@ -77,6 +85,16 @@
             </div>
         </div>
     </header>
+    
+    <!-- Description Section -->
+    <section class="bg-blue-50 border-b border-blue-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h1 class="text-2xl font-bold text-gray-900 mb-2 text-center">Neurodiversity & Assistive Technology Resource Hub</h1>
+            <p class="text-center text-gray-700 max-w-4xl mx-auto">
+                Welcome to the All Brains Welcome resource hub. This page is designed to help you discover a wide range of tools, apps, and strategies that can support various aspects of neurodiversity. Use the filters on the left to find resources tailored to your specific needs, whether it's for organization, focus, communication, or something else. Click on any resource card to learn more about it.
+            </p>
+        </div>
+    </section>
 
     <!-- Main Content Area: Divided into a sidebar for filters and a main section for results -->
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
@@ -84,7 +102,7 @@
             
             <!-- Filters Section (Left Sidebar): Contains interactive checkboxes for filtering -->
             <aside class="lg:col-span-1 mb-8 lg:mb-0">
-                <div class="bg-white p-6 rounded-lg shadow-sm sticky top-24">
+                <div class="bg-white p-6 rounded-lg shadow-sm filter-sidebar">
                     <h2 class="text-xl font-semibold mb-4 text-gray-900">Filters</h2>
                     <form id="filter-form">
                         <!-- Areas of Support Filter Group -->
@@ -235,7 +253,8 @@
 
                 const prices = [
                     'Free',
-                    'Paid'
+                    'Paid',
+                    'Free with Paid options'
                 ];
 
                 // Helper function to generate checkbox HTML.
@@ -266,22 +285,25 @@
                     // If no filters are active, show all items from the database.
                     filteredData = database;
                 } else {
-                    // If filters are active, apply the "OR" logic.
-                    // An item is included if it matches at least one of the selected filters from any category.
+                    // If filters are active, apply the "AND" logic within groups and "OR" between groups.
                     filteredData = database.filter(item => {
-                        const areaMatch = activeFilters['Areas of support'].length > 0 && 
-                                          Array.isArray(item['Areas of support']) && 
-                                          activeFilters['Areas of support'].some(value => item['Areas of support'].includes(value));
+                        // For a resource to be shown, it must match ALL active filter groups.
+                        // e.g., (matches Area) AND (matches Format)
+                        // An empty filter group is considered a match.
+                        
+                        const areaMatch = activeFilters['Areas of support'].length === 0 ||
+                                          (Array.isArray(item['Areas of support']) && 
+                                          activeFilters['Areas of support'].every(value => item['Areas of support'].includes(value)));
 
-                        const formatMatch = activeFilters['Format'].length > 0 && 
-                                            Array.isArray(item['Format']) && 
-                                            activeFilters['Format'].some(value => item['Format'].includes(value));
+                        const formatMatch = activeFilters['Format'].length === 0 ||
+                                            (Array.isArray(item['Format']) && 
+                                            activeFilters['Format'].every(value => item['Format'].includes(value)));
 
-                        const priceMatch = activeFilters['Price'].length > 0 && 
-                                           Array.isArray(item['Price']) && 
-                                           activeFilters['Price'].some(value => item['Price'].includes(value));
-
-                        return areaMatch || formatMatch || priceMatch;
+                        const priceMatch = activeFilters['Price'].length === 0 ||
+                                           (Array.isArray(item['Price']) && 
+                                           activeFilters['Price'].some(value => item['Price'].includes(value)));
+                                           
+                        return areaMatch && formatMatch && priceMatch;
                     });
                 }
 
@@ -337,11 +359,15 @@
                 
                 // Helper function for creating detail sections in the modal.
                 const detailSection = (title, content) => {
+                    // Check if content is null, undefined, or an empty string/array
                     if (!content || (Array.isArray(content) && content.length === 0)) return '';
+                    
                     const contentHtml = Array.isArray(content) 
                         ? content.map(c => `<li class="py-1">${c}</li>`).join('') 
-                        : `<p>${content}</p>`;
+                        : `<p class="whitespace-pre-wrap">${content}</p>`; // Use whitespace-pre-wrap to respect newlines
+                    
                     const listClass = Array.isArray(content) ? 'list-disc list-inside' : '';
+                    
                     return `
                         <div>
                             <h4 class="font-semibold text-gray-700">${title}</h4>
@@ -350,10 +376,10 @@
                     `;
                 };
 
-                // UPDATED: Removed 'Areas of Support', 'Format', and 'Price' from the modal view.
+                // Build modal content
                 modalContent.innerHTML = `
                     ${detailSection('Summary', item.Summary)}
-                    ${item['Further info'] ? detailSection('Further Info', item['Further info']) : ''}
+                    ${detailSection('Further info / notes', item['Further info / notes'])}
                     <div>
                         <a href="${item.Link}" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-4 focus:ring-blue-300">
                             Visit Website
@@ -386,7 +412,9 @@
 
                     // Update the activeFilters state.
                     if (isChecked) {
-                        activeFilters[group].push(value);
+                        if (!activeFilters[group].includes(value)) {
+                            activeFilters[group].push(value);
+                        }
                     } else {
                         activeFilters[group] = activeFilters[group].filter(item => item !== value);
                     }
@@ -432,7 +460,8 @@
             filterForm.addEventListener('input', handleFilterChange);
 
             // Listen for clicks on the reset button.
-            resetButton.addEventListener('click', () => {
+            resetButton.addEventListener('click', (e) => {
+                e.preventDefault();
                 // Reset the form fields.
                 filterForm.reset();
                 // Clear the active filters state object.
