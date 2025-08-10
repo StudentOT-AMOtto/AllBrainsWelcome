@@ -193,7 +193,6 @@
             let database = [];
             
             // --- Element Selectors ---
-            // A good practice to cache DOM elements that are frequently accessed.
             const resultsGrid = document.getElementById('results-grid');
             const resultsCount = document.getElementById('results-count');
             const noResults = document.getElementById('no-results');
@@ -210,7 +209,6 @@
             const resetButton = document.getElementById('reset-filters');
 
             // --- State Management ---
-            // Holds the currently selected filters.
             let activeFilters = {
                 'Areas of support': [],
                 'Format': [],
@@ -220,115 +218,66 @@
             // --- Functions ---
 
             /**
-             * Creates and populates the filter checkboxes based on predefined lists.
+             * Creates and populates the filter checkboxes with a "show more" button.
              */
             function createFilters() {
-                // Predefined lists for filters
-                const areas = [
-                    'Concentration and Focus',
-                    'Organisation and Time management',
-                    'Impulsivity and Hyperactivity',
-                    'Processing and Memory',
-                    'Communication and Social interaction',
-                    'Routine, Structure, and Change',
-                    'Movement and Co-ordination',
-                    'Writing',
-                    'Reading',
-                    'Numbers and Mathematics',
-                    'Auditory processing',
-                    'Visual processing',
-                    'Sensory sensitivity',
-                    'Self-regulation, Managing Emotions, Confidence, and Self-esteem'
-                ];
+                const areas = [ 'Concentration and Focus', 'Organisation and Time management', 'Impulsivity and Hyperactivity', 'Processing and Memory', 'Communication and Social interaction', 'Routine, Structure, and Change', 'Movement and Co-ordination', 'Writing', 'Reading', 'Numbers and Mathematics', 'Auditory processing', 'Visual processing', 'Sensory sensitivity', 'Self-regulation, Managing Emotions, Confidence, and Self-esteem' ];
+                const formats = [ 'Website', 'App', 'Hybrid system', 'Equipment', 'Software', 'Browser Extension', 'Feature' ];
+                const prices = [ 'Free', 'Paid', 'Free with Paid options' ];
 
-                const formats = [
-                    'Website',
-                    'App',
-                    'Hybrid system',
-                    'Equipment',
-                    'Software',
-                    'Browser Extension',
-                    'Feature'
-                ];
+                const createFilterGroup = (container, items, groupName, initialLimit) => {
+                    container.innerHTML = items.sort().map((item, index) => {
+                        const isHidden = initialLimit && index >= initialLimit;
+                        return `
+                            <label class="flex items-center space-x-3 cursor-pointer ${isHidden ? 'hidden' : ''}" data-filter-item>
+                                <input type="checkbox" value="${item}" data-group="${groupName}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                <span class="text-sm text-gray-700">${item}</span>
+                            </label>
+                        `;
+                    }).join('');
 
-                const prices = [
-                    'Free',
-                    'Paid',
-                    'Free with Paid options'
-                ];
-
-                // Helper function to generate checkbox HTML.
-                // This reduces code repetition.
-                const createCheckbox = (value, group) => `
-                    <label class="flex items-center space-x-3 cursor-pointer">
-                        <input type="checkbox" value="${value}" data-group="${group}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <span class="text-gray-700">${value}</span>
-                    </label>
-                `;
-
-                // Populate the filter sections in the HTML.
-                areasOfSupportFilters.innerHTML = areas.sort().map(area => createCheckbox(area, 'Areas of support')).join('');
-                formatFilters.innerHTML = formats.sort().map(format => createCheckbox(format, 'Format')).join('');
-                priceFilters.innerHTML = prices.sort().map(price => createCheckbox(price, 'Price')).join('');
+                    if (initialLimit && items.length > initialLimit) {
+                        const showMoreButton = document.createElement('button');
+                        showMoreButton.type = 'button';
+                        showMoreButton.className = 'text-sm text-blue-600 hover:underline mt-2';
+                        showMoreButton.textContent = `Show all ${items.length}`;
+                        showMoreButton.dataset.action = 'toggle-filters';
+                        showMoreButton.dataset.target = container.id;
+                        container.insertAdjacentElement('afterend', showMoreButton);
+                    }
+                };
+                
+                createFilterGroup(areasOfSupportFilters, areas, 'Areas of support', 4);
+                createFilterGroup(formatFilters, formats, 'Format', 4);
+                createFilterGroup(priceFilters, prices, 'Price', null); // No limit for price
             }
 
             /**
              * Filters and displays the resources based on the active filters.
              */
             function renderResults() {
-                // Check if any filters are selected across all groups.
                 const anyFilterActive = Object.values(activeFilters).some(arr => arr.length > 0);
-
                 let filteredData;
 
                 if (!anyFilterActive) {
-                    // If no filters are active, show all items from the database.
                     filteredData = database;
                 } else {
-                    // If filters are active, apply the "AND" logic within groups and "OR" between groups.
                     filteredData = database.filter(item => {
-                        // For a resource to be shown, it must match ALL active filter groups.
-                        // e.g., (matches Area) AND (matches Format)
-                        // An empty filter group is considered a match.
-                        
-                        const areaMatch = activeFilters['Areas of support'].length === 0 ||
-                                          (Array.isArray(item['Areas of support']) && 
-                                          activeFilters['Areas of support'].every(value => item['Areas of support'].includes(value)));
-
-                        const formatMatch = activeFilters['Format'].length === 0 ||
-                                            (Array.isArray(item['Format']) && 
-                                            activeFilters['Format'].every(value => item['Format'].includes(value)));
-
-                        const priceMatch = activeFilters['Price'].length === 0 ||
-                                           (Array.isArray(item['Price']) && 
-                                           activeFilters['Price'].some(value => item['Price'].includes(value)));
-                                           
+                        const areaMatch = activeFilters['Areas of support'].length === 0 || (Array.isArray(item['Areas of support']) && activeFilters['Areas of support'].every(value => item['Areas of support'].includes(value)));
+                        const formatMatch = activeFilters['Format'].length === 0 || (Array.isArray(item['Format']) && activeFilters['Format'].every(value => item['Format'].includes(value)));
+                        const priceMatch = activeFilters['Price'].length === 0 || (Array.isArray(item['Price']) && activeFilters['Price'].some(value => item['Price'].includes(value)));
                         return areaMatch && formatMatch && priceMatch;
                     });
                 }
 
-                // Clear the current grid content.
                 resultsGrid.innerHTML = '';
-
-                // Update the results count display.
                 resultsCount.textContent = `${filteredData.length} Result${filteredData.length !== 1 ? 's' : ''}`;
+                noResults.classList.toggle('hidden', filteredData.length > 0);
 
-                // Show or hide the "no results" message.
-                if (filteredData.length === 0) {
-                    noResults.classList.remove('hidden');
-                } else {
-                    noResults.classList.add('hidden');
-                }
-
-                // Create and append a card for each filtered item.
                 filteredData.forEach(item => {
                     const card = document.createElement('div');
                     card.className = 'bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col cursor-pointer';
-                    
-                    // Helper function to create badge HTML
                     const createBadge = (text, color) => `<span class="inline-block bg-${color}-100 text-${color}-800 text-xs font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full">${text}</span>`;
-
-                    // Card content
                     card.innerHTML = `
                         <div class="p-6 flex-grow">
                             <h3 class="text-xl font-bold text-gray-900 mb-2">${item.Name}</h3>
@@ -342,8 +291,6 @@
                             </div>
                         </div>
                     `;
-                    
-                    // Add click listener to the card to open the modal with item details.
                     card.addEventListener('click', () => showModal(item));
                     resultsGrid.appendChild(card);
                 });
@@ -351,23 +298,13 @@
 
             /**
              * Displays the modal with detailed information about a selected resource.
-             * @param {object} item - The resource item object.
              */
             function showModal(item) {
-                // Populate modal with item data.
                 modalTitle.textContent = item.Name;
-                
-                // Helper function for creating detail sections in the modal.
                 const detailSection = (title, content) => {
-                    // Check if content is null, undefined, or an empty string/array
                     if (!content || (Array.isArray(content) && content.length === 0)) return '';
-                    
-                    const contentHtml = Array.isArray(content) 
-                        ? content.map(c => `<li class="py-1">${c}</li>`).join('') 
-                        : `<p class="whitespace-pre-wrap">${content}</p>`; // Use whitespace-pre-wrap to respect newlines
-                    
+                    const contentHtml = Array.isArray(content) ? content.map(c => `<li class="py-1">${c}</li>`).join('') : `<p class="whitespace-pre-wrap">${content}</p>`;
                     const listClass = Array.isArray(content) ? 'list-disc list-inside' : '';
-                    
                     return `
                         <div>
                             <h4 class="font-semibold text-gray-700">${title}</h4>
@@ -375,8 +312,6 @@
                         </div>
                     `;
                 };
-
-                // Build modal content
                 modalContent.innerHTML = `
                     ${detailSection('Summary', item.Summary)}
                     ${detailSection('Further info / notes', item['Further info / notes'])}
@@ -386,14 +321,12 @@
                         </a>
                     </div>
                 `;
-
-                // Show the modal and disable body scroll.
                 modalContainer.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
             }
 
             /**
-             * Hides the modal and re-enables body scrolling.
+             * Hides the modal.
              */
             function hideModal() {
                 modalContainer.classList.add('hidden');
@@ -401,51 +334,36 @@
             }
             
             /**
-             * Handles changes in the filter form.
-             * @param {Event} e - The event object from the input change.
+             * Handles changes in the filter form checkboxes.
              */
             function handleFilterChange(e) {
                 if (e.target.type === 'checkbox') {
                     const group = e.target.dataset.group;
                     const value = e.target.value;
                     const isChecked = e.target.checked;
-
-                    // Update the activeFilters state.
                     if (isChecked) {
-                        if (!activeFilters[group].includes(value)) {
-                            activeFilters[group].push(value);
-                        }
+                        if (!activeFilters[group].includes(value)) activeFilters[group].push(value);
                     } else {
                         activeFilters[group] = activeFilters[group].filter(item => item !== value);
                     }
-                    
-                    // Re-render the results based on the new filters.
                     renderResults();
                 }
             }
 
             /**
-             * Fetches data from the JSON file and initializes the application.
+             * Fetches data and initializes the application.
              */
             async function initializeApp() {
                 try {
-                    // Fetch the data from the local JSON file.
                     const response = await fetch('database.json');
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     database = await response.json();
-
-                    // Once data is loaded, proceed with the initial setup.
                     createFilters();
                     renderResults();
-
                 } catch (error) {
-                    // Basic error handling.
                     console.error("Failed to initialize the application:", error);
-                    resultsGrid.innerHTML = `<p class="text-red-500">An error occurred while loading the data. Please check the console.</p>`;
+                    resultsGrid.innerHTML = `<p class="text-red-500">An error occurred while loading the data.</p>`;
                 } finally {
-                    // Hide the loading indicator once everything is done.
                     loadingIndicator.classList.add('hidden');
                 }
             }
@@ -453,32 +371,39 @@
             // --- Initial Setup ---
             initializeApp();
 
-
             // --- Event Listeners ---
-            
-            // Listen for changes on the filter form.
             filterForm.addEventListener('input', handleFilterChange);
+            
+            filterForm.addEventListener('click', (e) => {
+                if (e.target.dataset.action === 'toggle-filters') {
+                    const targetId = e.target.dataset.target;
+                    const container = document.getElementById(targetId);
+                    const allItems = container.querySelectorAll('label[data-filter-item]');
+                    const isShowingAll = e.target.textContent.startsWith('Show less');
+                    
+                    if (isShowingAll) {
+                        allItems.forEach((item, index) => {
+                            if (index >= 4) item.classList.add('hidden');
+                        });
+                        e.target.textContent = `Show all ${allItems.length}`;
+                    } else {
+                        allItems.forEach(item => item.classList.remove('hidden'));
+                        e.target.textContent = 'Show less';
+                    }
+                }
+            });
 
-            // Listen for clicks on the reset button.
             resetButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Reset the form fields.
                 filterForm.reset();
-                // Clear the active filters state object.
                 activeFilters = { 'Areas of support': [], 'Format': [], 'Price': [] };
-                // Re-render the results to show all items.
                 renderResults();
             });
 
-            // Listen for clicks to close the modal.
             modalCloseButton.addEventListener('click', hideModal);
             modalOverlay.addEventListener('click', hideModal);
-
-            // Listen for the 'Escape' key to close the modal.
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && !modalContainer.classList.contains('hidden')) {
-                    hideModal();
-                }
+                if (e.key === 'Escape' && !modalContainer.classList.contains('hidden')) hideModal();
             });
         });
     </script>
