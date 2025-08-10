@@ -230,13 +230,46 @@
                 createFilterGroup(priceFilters, prices, 'Price', null);
             }
 
+            /**
+             * Filters and displays the resources based on active filters and search term.
+             * This version uses "OR" logic for filters.
+             */
             function renderResults() {
                 let filteredData = database.filter(item => {
-                    const areaMatch = activeFilters['Areas of support'].length === 0 || (Array.isArray(item['Areas of support']) && activeFilters['Areas of support'].every(value => item['Areas of support'].includes(value)));
-                    const formatMatch = activeFilters['Format'].length === 0 || (Array.isArray(item['Format']) && activeFilters['Format'].every(value => item['Format'].includes(value)));
-                    const priceMatch = activeFilters['Price'].length === 0 || (Array.isArray(item['Price']) && activeFilters['Price'].some(value => item['Price'].includes(value)));
-                    const searchMatch = !activeSearchTerm || (item.Name && item.Name.toLowerCase().includes(activeSearchTerm)) || (item.Summary && item.Summary.toLowerCase().includes(activeSearchTerm)) || (item['Further info / notes'] && item['Further info / notes'].toLowerCase().includes(activeSearchTerm));
-                    return areaMatch && formatMatch && priceMatch && searchMatch;
+                    // Search logic is an AND condition, so it must always pass first.
+                    const searchMatch = !activeSearchTerm ||
+                                        (item.Name && item.Name.toLowerCase().includes(activeSearchTerm)) ||
+                                        (item.Summary && item.Summary.toLowerCase().includes(activeSearchTerm)) ||
+                                        (item['Further info / notes'] && item['Further info / notes'].toLowerCase().includes(activeSearchTerm));
+
+                    if (!searchMatch) {
+                        return false;
+                    }
+
+                    // Combine all active filters from all groups into a single array.
+                    const allActiveFilterValues = [
+                        ...activeFilters['Areas of support'],
+                        ...activeFilters['Format'],
+                        ...activeFilters['Price']
+                    ];
+
+                    // If no filters are selected, the item is a match (since it already passed the search).
+                    if (allActiveFilterValues.length === 0) {
+                        return true;
+                    }
+
+                    // Combine all of the item's filterable properties into a single array.
+                    // This ensures we check against all possible values the item has.
+                    const allItemValues = [
+                        ...(Array.isArray(item['Areas of support']) ? item['Areas of support'] : []),
+                        ...(Array.isArray(item['Format']) ? item['Format'] : []),
+                        ...(Array.isArray(item['Price']) ? item['Price'] : [])
+                    ];
+
+                    // The item is a match if ANY of its values are present in the active filters list ("OR" logic).
+                    const filterMatch = allActiveFilterValues.some(filterValue => allItemValues.includes(filterValue));
+
+                    return filterMatch;
                 });
 
                 resultsGrid.innerHTML = '';
