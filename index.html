@@ -280,11 +280,21 @@
                 if (!anyFilterActive) {
                     finalFilteredData = searchFiltered;
                 } else {
+                    // "OR" logic: show item if it matches ANY selected filter
                     finalFilteredData = searchFiltered.filter(item => {
-                        const areaMatch = activeFilters['Areas of support'].length === 0 || (Array.isArray(item['Areas of support']) && activeFilters['Areas of support'].every(value => item['Areas of support'].includes(value)));
-                        const formatMatch = activeFilters['Format'].length === 0 || (Array.isArray(item['Format']) && activeFilters['Format'].every(value => item['Format'].includes(value)));
-                        const priceMatch = activeFilters['Price'].length === 0 || (Array.isArray(item['Price']) && activeFilters['Price'].some(value => item['Price'].includes(value)));
-                        return areaMatch && formatMatch && priceMatch;
+                        const activeFilterCategories = Object.keys(activeFilters).filter(key => activeFilters[key].length > 0);
+                        
+                        // Check if the item matches any of the active filters in any active category
+                        return activeFilterCategories.some(category => {
+                            const itemValues = item[category];
+                            const filterValues = activeFilters[category];
+
+                            if (Array.isArray(itemValues)) {
+                                // Check if any of the item's values for this category are in the active filter list for this category
+                                return itemValues.some(itemValue => filterValues.includes(itemValue));
+                            }
+                            return false;
+                        });
                     });
                 }
 
